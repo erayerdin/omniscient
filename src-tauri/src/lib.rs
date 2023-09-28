@@ -6,8 +6,10 @@
 
 use thiserror::Error;
 
+pub mod logging;
+
 #[derive(Debug, Error)]
 pub enum OmniscientError {
     #[error("Failed to initialize logging. {0}")]
-    LoggingInitError(fern::InitError),
+    LoggingInitError(log::SetLoggerError),
 }
