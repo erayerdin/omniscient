@@ -24,6 +24,7 @@ clap = "4.4.6"
 humantime = "2.1.0"
 clap-verbosity-flag = "2.0.1"
 thiserror = "1.0.49"
+sysinfo = "0.29.10"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.
