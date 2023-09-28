@@ -21,3 +21,7 @@
 .mr-xs {
     @apply mr-2;
 }
+
+html {
+  cursor: default;
+}
