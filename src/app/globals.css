@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.p-xs {
+  @apply p-2;
+}
+
+.p-sm {
+  @apply p-4;
+}
+
+.m-xs {
+  @apply m-2;
+}
+
+.m-sm {
+  @apply m-4;
+}
