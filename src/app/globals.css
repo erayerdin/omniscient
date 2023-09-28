@@ -17,3 +17,7 @@
 .m-sm {
   @apply m-4;
 }
+
+.mr-xs {
+    @apply mr-2;
+}
