@@ -4,13 +4,16 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-use thiserror::Error;
+use clap::Parser;
 
-pub mod cli;
-pub mod logging;
+#[derive(Debug, Parser)]
+pub struct Cli {
+    #[clap(flatten)]
+    verbose: clap_verbosity_flag::Verbosity,
+}
 
-#[derive(Debug, Error)]
-pub enum OmniscientError {
-    #[error("Failed to initialize logging. {0}")]
-    LoggingInitError(log::SetLoggerError),
+impl Cli {
+    pub fn verbosity(&self) -> &clap_verbosity_flag::Verbosity {
+        &self.verbose
+    }
 }

@@ -7,10 +7,12 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use app::logging::init_logger;
+use app::{cli::Cli, logging::init_logger};
+use clap::Parser;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    init_logger()?;
+    let cli = Cli::try_parse()?;
+    init_logger(&cli)?;
 
     tauri::Builder::default()
         .run(tauri::generate_context!())
