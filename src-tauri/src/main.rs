@@ -21,6 +21,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .manage(SystemState::default())
         .invoke_handler(tauri::generate_handler![
             get_cpu_usage,
+            get_cpu_info,
             get_memory_usage,
             get_total_memory,
             get_disk_usage,

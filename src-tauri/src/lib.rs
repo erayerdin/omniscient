@@ -11,6 +11,7 @@ use wrappers::SetLoggerErrorWrapper;
 pub mod cli;
 pub mod commands;
 pub mod logging;
+pub(crate) mod models;
 pub mod states;
 mod wrappers;
 
