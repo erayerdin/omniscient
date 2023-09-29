@@ -61,8 +61,8 @@ export default function Home() {
         />
         <ResourceCard
           label="Disk"
-          used={45}
-          total={512}
+          used={overviewInfo.currentDisk}
+          total={overviewInfo.totalDisk}
           footer={(used, total) => <div>{used} / {total} GiB</div>}
         />
       </header>
