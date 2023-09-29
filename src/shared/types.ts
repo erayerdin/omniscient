@@ -11,3 +11,10 @@ type OverviewInfo = {
   currentDiskUsage: number,
   totalDiskAmount: number,
 }
+
+type Cpu = {
+  name: string,
+  brand: string,
+  vendorId: string,
+  frequency: number,
+}
