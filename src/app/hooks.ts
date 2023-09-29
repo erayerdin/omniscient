@@ -20,13 +20,13 @@ export const useOverviewInfo = (): OverviewInfo => {
   };
 
   const fetchMemory = async () => {
-    const randomFraction = Math.random();
-    const randomValue = randomFraction * 16;
-    return randomValue;
+    const memoryUsage: number = await invoke('get_memory_usage');
+    return memoryUsage / (1024 * 1024 * 1024);
   };
 
   const fetchTotalMemory = async () => {
-    return 16;
+    const totalMemory: number = await invoke('get_total_memory');
+    return totalMemory / (1024 * 1024 * 1024);
   };
 
   const fetchCurrentDisk = async () => {
