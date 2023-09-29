@@ -10,6 +10,8 @@ use crate::{states::system::SystemState, OmniscientError};
 
 #[tauri::command]
 pub fn get_cpu_usage(system_state: tauri::State<SystemState>) -> Result<f32, OmniscientError> {
+    log::debug!("Getting CPU usage");
+
     let mut system = system_state
         .inner()
         .0
@@ -18,6 +20,8 @@ pub fn get_cpu_usage(system_state: tauri::State<SystemState>) -> Result<f32, Omn
 
     system.refresh_cpu();
     let cpus = system.cpus();
+    log::trace!("cpus: {cpus:?}");
     let usage = cpus.iter().map(|cpu| cpu.cpu_usage()).sum::<f32>() / cpus.len() as f32;
+    log::trace!("cpu usage: {usage}");
     Ok(usage)
 }

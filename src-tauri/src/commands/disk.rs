@@ -10,6 +10,8 @@ use crate::{states::system::SystemState, OmniscientError};
 
 #[tauri::command]
 pub fn get_disk_usage(system_state: tauri::State<SystemState>) -> Result<u64, OmniscientError> {
+    log::debug!("Getting disk usage...");
+
     let mut system = system_state
         .inner()
         .0
@@ -18,18 +20,26 @@ pub fn get_disk_usage(system_state: tauri::State<SystemState>) -> Result<u64, Om
 
     system.refresh_disks();
     system.refresh_disks_list();
-    let disk_usage = system
+    let disks = system
         .disks()
         .into_iter()
         .filter(|d| !d.is_removable())
-        .map(|d| d.available_space())
-        .sum();
+        .filter_map(|d| match d.kind() {
+            sysinfo::DiskKind::Unknown(_) => None,
+            _ => Some(d),
+        });
+    log::trace!("not removable known disks: {disks:?}");
+
+    let disk_usage = disks.map(|d| d.available_space()).sum();
+    log::trace!("disk usage: {disk_usage}");
 
     Ok(disk_usage)
 }
 
 #[tauri::command]
 pub fn get_total_disk(system_state: tauri::State<SystemState>) -> Result<u64, OmniscientError> {
+    log::debug!("Getting total disk...");
+
     let mut system = system_state
         .inner()
         .0
@@ -38,12 +48,19 @@ pub fn get_total_disk(system_state: tauri::State<SystemState>) -> Result<u64, Om
 
     system.refresh_disks();
     system.refresh_disks_list();
-    let total_disk = system
+
+    let disks = system
         .disks()
         .into_iter()
         .filter(|d| !d.is_removable())
-        .map(|d| d.total_space())
-        .sum();
+        .filter_map(|d| match d.kind() {
+            sysinfo::DiskKind::Unknown(_) => None,
+            _ => Some(d),
+        });
+    log::trace!("not removable known disks: {disks:?}");
+
+    let total_disk = disks.map(|d| d.total_space()).sum();
+    log::trace!("total disk: {total_disk}");
 
     Ok(total_disk)
 }
