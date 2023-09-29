@@ -26,6 +26,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             get_total_memory,
             get_disk_usage,
             get_total_disk,
+            get_disk_info,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

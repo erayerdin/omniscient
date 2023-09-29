@@ -6,7 +6,11 @@
 
 use sysinfo::{CpuExt, SystemExt};
 
-use crate::{models::cpu::Cpu, states::system::SystemState, OmniscientError};
+use crate::{
+    models::{cpu::Cpu, disk::Disk},
+    states::system::SystemState,
+    OmniscientError,
+};
 
 #[tauri::command]
 pub fn get_cpu_usage(system_state: tauri::State<SystemState>) -> Result<f32, OmniscientError> {

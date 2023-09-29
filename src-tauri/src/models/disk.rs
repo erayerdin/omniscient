@@ -39,8 +39,8 @@ impl Serialize for DiskType {
     }
 }
 
-impl From<sysinfo::Disk> for Disk {
-    fn from(value: sysinfo::Disk) -> Self {
+impl From<&sysinfo::Disk> for Disk {
+    fn from(value: &sysinfo::Disk) -> Self {
         Self {
             r#type: match value.kind() {
                 sysinfo::DiskKind::HDD => Some(DiskType::HDD),

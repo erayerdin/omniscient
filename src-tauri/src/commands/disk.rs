@@ -6,7 +6,7 @@
 
 use sysinfo::{DiskExt, SystemExt};
 
-use crate::{states::system::SystemState, OmniscientError};
+use crate::{models::disk::Disk, states::system::SystemState, OmniscientError};
 
 #[tauri::command]
 pub fn get_disk_usage(system_state: tauri::State<SystemState>) -> Result<u64, OmniscientError> {
@@ -63,4 +63,26 @@ pub fn get_total_disk(system_state: tauri::State<SystemState>) -> Result<u64, Om
     log::trace!("total disk: {total_disk}");
 
     Ok(total_disk)
+}
+
+#[tauri::command]
+pub fn get_disk_info(
+    system_state: tauri::State<SystemState>,
+) -> Result<Vec<Disk>, OmniscientError> {
+    log::debug!("Getting disk info...");
+
+    let mut system = system_state
+        .inner()
+        .0
+        .lock()
+        .map_err(|_| OmniscientError::MutexLockError)?;
+
+    system.refresh_disks_list();
+
+    let disks = system.disks();
+    log::trace!("disks: {disks:?}");
+
+    let mut disks_vec: Vec<Disk> = Vec::with_capacity(disks.len());
+    disks_vec.extend(disks.iter().map(|d| d.into()));
+    Ok(disks_vec)
 }
