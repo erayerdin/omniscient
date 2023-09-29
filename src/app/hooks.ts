@@ -76,3 +76,18 @@ export const useCpuInfo = (): Cpu[] => {
 
   return cpus;
 }
+
+export const useDiskInfo = (): Disk[] => {
+  const [ disks, setDisks ] = useState<Disk[]>([]);
+
+  const fetchDiskInfo = async () => {
+    const diskInfo: Disk[] = await invoke('get_disk_info');
+    return diskInfo;
+  };
+
+  useEffect(() => {
+    fetchDiskInfo().then((val) => setDisks(val));
+  }, []);
+
+  return disks;
+}
