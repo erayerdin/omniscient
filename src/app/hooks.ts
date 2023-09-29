@@ -14,41 +14,41 @@ export const useOverviewInfo = (): OverviewInfo => {
   const [ currentDiskUsage, setCurrentDiskUsage ] = useState(0);
   const [ totalDiskAmount, setTotalDiskAmount ] = useState(0);
 
-  const fetchCpu = async () => {
+  const fetchCpuUsage = async () => {
     const cpuUsage: number = await invoke('get_cpu_usage');;
     return cpuUsage;
   };
 
-  const fetchMemory = async () => {
+  const fetchMemoryUsage = async () => {
     const memoryUsage: number = await invoke('get_memory_usage');
     return memoryUsage / (1024 * 1024 * 1024);
   };
 
-  const fetchTotalMemory = async () => {
+  const fetchTotalMemoryAmount = async () => {
     const totalMemory: number = await invoke('get_total_memory');
     return totalMemory / (1024 * 1024 * 1024);
   };
 
-  const fetchCurrentDisk = async () => {
+  const fetchCurrentDiskUsage = async () => {
     const diskUsage: number = await invoke('get_disk_usage');
     return diskUsage / (1024 * 1024 * 1024);
   };
 
-  const fetchTotalDisk = async () => {
+  const fetchTotalDiskAmount = async () => {
     const totalDisk: number = await invoke('get_total_disk');
     return totalDisk / (1024 * 1024 * 1024);
   };
 
   useEffect(() => {
-    fetchTotalMemory().then((val) => setTotalMemoryAmount(val));
-    fetchCurrentDisk().then((val) => setCurrentDiskUsage(val));
-    fetchTotalDisk().then((val) => setTotalDiskAmount(val));
+    fetchTotalMemoryAmount().then((val) => setTotalMemoryAmount(val));
+    fetchCurrentDiskUsage().then((val) => setCurrentDiskUsage(val));
+    fetchTotalDiskAmount().then((val) => setTotalDiskAmount(val));
   }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetchCpu().then((val) => setCurrentCpuUsage(val));
-      fetchMemory().then((val) => setCurrentMemoryUsage(val));
+      fetchCpuUsage().then((val) => setCurrentCpuUsage(val));
+      fetchMemoryUsage().then((val) => setCurrentMemoryUsage(val));
     }, 1000);
     return () => clearInterval(interval);
   }, [currentCpuUsage, currentMemoryUsage]);
