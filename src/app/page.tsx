@@ -29,6 +29,7 @@ const ResourceCard = ({ label, used, total, footer }: ResourceCardProps) => {
       <header className="text-xl">{label}</header>
       <CircularProgress
         size="lg"
+        aria-label={label}
         classNames={{
           svg: "w-32 h-32"
         }}
