@@ -4,6 +4,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import { invoke } from "@tauri-apps/api";
 import { useEffect, useState } from "react";
 
 export const useOverviewInfo = (): OverviewInfo => {
@@ -14,9 +15,8 @@ export const useOverviewInfo = (): OverviewInfo => {
   const [ totalDisk, setTotalDisk ] = useState(0);
 
   const fetchCpu = async () => {
-    const randomFraction = Math.random();
-    const randomValue = randomFraction * 100;
-    return randomValue;
+    const cpuUsage: number = await invoke('get_cpu_usage');;
+    return cpuUsage;
   };
 
   const fetchMemory = async () => {
