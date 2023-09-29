@@ -57,7 +57,7 @@ export default function Home() {
           label="Memory"
           used={overviewInfo.currentMemory}
           total={overviewInfo.totalMemory}
-          footer={(used, total) => <div>{used.toFixed(2)} / {total} GiB</div>}
+          footer={(used, total) => <div>{used.toFixed(2)} / {total.toFixed(2)} GiB</div>}
         />
         <ResourceCard
           label="Disk"
