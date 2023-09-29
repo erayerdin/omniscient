@@ -5,9 +5,9 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 type OverviewInfo = {
-  currentCpu: number,
-  currentMemory: number,
-  totalMemory: number,
-  currentDisk: number,
-  totalDisk: number,
+  currentCpuUsage: number,
+  currentMemoryUsage: number,
+  totalMemoryAmount: number,
+  currentDiskUsage: number,
+  totalDiskAmount: number,
 }

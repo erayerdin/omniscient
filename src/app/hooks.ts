@@ -54,10 +54,10 @@ export const useOverviewInfo = (): OverviewInfo => {
   }, [currentCpuUsage, currentMemoryUsage]);
 
   return {
-    currentCpu: currentCpuUsage,
-    currentMemory: currentMemoryUsage,
-    totalMemory: totalMemoryAmount,
-    currentDisk: currentDiskUsage,
-    totalDisk: totalDiskAmount,
+    currentCpuUsage: currentCpuUsage,
+    currentMemoryUsage: currentMemoryUsage,
+    totalMemoryAmount: totalMemoryAmount,
+    currentDiskUsage: currentDiskUsage,
+    totalDiskAmount: totalDiskAmount,
   };
 }

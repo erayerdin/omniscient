@@ -50,20 +50,20 @@ export default function Home() {
       <header className="flex w-full justify-center space-x-2">
         <ResourceCard
           label="CPU"
-          used={overviewInfo.currentCpu}
+          used={overviewInfo.currentCpuUsage}
           total={100}
           footer={(used, total) => <div>{(used / total * 100).toFixed(2)}%</div>}
         />
         <ResourceCard
           label="Memory"
-          used={overviewInfo.currentMemory}
-          total={overviewInfo.totalMemory}
+          used={overviewInfo.currentMemoryUsage}
+          total={overviewInfo.totalMemoryAmount}
           footer={(used, total) => <div>{used.toFixed(2)} / {total.toFixed(2)} GiB</div>}
         />
         <ResourceCard
           label="Disk"
-          used={overviewInfo.currentDisk}
-          total={overviewInfo.totalDisk}
+          used={overviewInfo.currentDiskUsage}
+          total={overviewInfo.totalDiskAmount}
           footer={(used, total) => <div>{used.toFixed(2)} / {total.toFixed(2)} GiB</div>}
         />
       </header>
