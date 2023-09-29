@@ -1,55 +1,9 @@
 "use client";
 
-import { CircularProgress, Modal, ModalBody, ModalContent, ModalHeader, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
+import { useDisclosure } from "@nextui-org/react";
+import CpuModal from "./components/CpuModal";
 import ResourceCard from "./components/ResourceCard";
-import { useCpuInfo, useOverviewInfo } from "./hooks";
-
-const CpuModal = ({ isOpen, onOpenChange }: { isOpen: boolean, onOpenChange: () => void }) => {
-  const cpus = useCpuInfo();
-  console.log(cpus);
-
-  return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-      <ModalContent>
-        {(onClose) => {
-          return (
-            <>
-              <ModalHeader className="flex flex-col gap-1 items-center">
-                CPU Information
-              </ModalHeader>
-              <ModalBody className="flex items-center">
-                {
-                  cpus.length === 0
-                    ? <CircularProgress aria-label="Loading CPU information..." />
-                    : (
-                      <Table>
-                        <TableHeader>
-                          <TableColumn>Name</TableColumn>
-                          <TableColumn>Vendor ID</TableColumn>
-                          <TableColumn>Brand</TableColumn>
-                          <TableColumn>Frequency</TableColumn>
-                        </TableHeader>
-                        <TableBody>
-                          {cpus.map((cpu) => (
-                            <TableRow key={cpu.name}>
-                              <TableCell>{cpu.name}</TableCell>
-                              <TableCell>{cpu.vendorId}</TableCell>
-                              <TableCell>{cpu.brand}</TableCell>
-                              <TableCell>{cpu.frequency} MHz</TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    )
-                }
-              </ModalBody>
-            </>
-          )
-        }}
-      </ModalContent>
-    </Modal>
-  );
-}
+import { useOverviewInfo } from "./hooks";
 
 export default function Home() {
   const overviewInfo = useOverviewInfo();
