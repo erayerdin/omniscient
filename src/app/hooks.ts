@@ -30,13 +30,13 @@ export const useOverviewInfo = (): OverviewInfo => {
   };
 
   const fetchCurrentDisk = async () => {
-    const randomFraction = Math.random();
-    const randomValue = randomFraction * 549_755_813_888; // 512 GiB
-    return randomValue;
+    const diskUsage: number = await invoke('get_disk_usage');
+    return diskUsage / (1024 * 1024 * 1024);
   };
 
   const fetchTotalDisk = async () => {
-    return 549_755_813_888; // 512 GiB
+    const totalDisk: number = await invoke('get_total_disk');
+    return totalDisk / (1024 * 1024 * 1024);
   };
 
   useEffect(() => {
