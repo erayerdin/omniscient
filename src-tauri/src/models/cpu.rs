@@ -16,8 +16,8 @@ pub struct Cpu {
     frequency: u64,
 }
 
-impl From<sysinfo::Cpu> for Cpu {
-    fn from(value: sysinfo::Cpu) -> Self {
+impl From<&sysinfo::Cpu> for Cpu {
+    fn from(value: &sysinfo::Cpu) -> Self {
         Self {
             name: value.name().into(),
             brand: value.brand().into(),

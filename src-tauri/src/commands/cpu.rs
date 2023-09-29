@@ -44,6 +44,7 @@ pub fn get_cpu_info(system_state: tauri::State<SystemState>) -> Result<Vec<Cpu>,
     let cpus = system.cpus();
     log::trace!("cpus: {cpus:?}");
 
-    let cpus_vec: Vec<Cpu> = Vec::with_capacity(cpus.len());
+    let mut cpus_vec: Vec<Cpu> = Vec::with_capacity(cpus.len());
+    cpus_vec.extend(cpus.iter().map(|c| c.into()));
     Ok(cpus_vec)
 }
