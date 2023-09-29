@@ -27,7 +27,6 @@ pub fn get_cpu_usage(system_state: tauri::State<SystemState>) -> Result<f32, Omn
 
     let mut system = system_state
         .inner()
-        .clone()
         .0
         .lock()
         .map_err(|e| OmniscientError::MutexLockError)?;
