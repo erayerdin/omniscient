@@ -7,7 +7,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use app::{cli::Cli, commands::cpu::*, logging::init_logger};
+use app::{cli::Cli, commands::cpu::*, logging::init_logger, states::system::SystemState};
 use clap::Parser;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
