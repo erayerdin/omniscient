@@ -9,8 +9,7 @@ import { useCpuInfo } from "../hooks";
 
 const CpuModal = ({ isOpen, onOpenChange }: { isOpen: boolean, onOpenChange: () => void }) => {
   const cpus = useCpuInfo();
-  console.log(cpus);
-
+  
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
