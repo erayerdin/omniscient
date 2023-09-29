@@ -8,7 +8,7 @@ use std::time::SystemTime;
 
 use crate::{cli::Cli, OmniscientError};
 
-pub fn init_logger(cli: &Cli) -> Result<(), OmniscientError> {
+pub fn init_logger(cli: Cli) -> Result<(), OmniscientError> {
     fern::Dispatch::new()
         .format(|out, message, record| {
             out.finish(format_args!(
@@ -22,6 +22,6 @@ pub fn init_logger(cli: &Cli) -> Result<(), OmniscientError> {
         .level(cli.verbosity().log_level_filter())
         .chain(std::io::stdout())
         .apply()
-        .map_err(|e| OmniscientError::LoggingInitError(e))?;
+        .map_err(|e| OmniscientError::LoggingInitError(e.into()))?;
     Ok(())
 }
