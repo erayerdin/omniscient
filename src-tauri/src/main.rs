@@ -8,7 +8,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use app::{
-    cli::Cli, commands::cpu::*, commands::memory::*, logging::init_logger,
+    cli::Cli, commands::cpu::*, commands::disk::*, commands::memory::*, logging::init_logger,
     states::system::SystemState,
 };
 use clap::Parser;
@@ -22,7 +22,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .invoke_handler(tauri::generate_handler![
             get_cpu_usage,
             get_memory_usage,
-            get_total_memory
+            get_total_memory,
+            get_disk_usage,
+            get_total_disk,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

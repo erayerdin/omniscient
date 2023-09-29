@@ -5,4 +5,5 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 pub mod cpu;
+pub mod disk;
 pub mod memory;
