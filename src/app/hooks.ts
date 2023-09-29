@@ -62,17 +62,17 @@ export const useOverviewInfo = (): OverviewInfo => {
   };
 }
 
-export const useCpu = (): Cpu | null => {
-  const [ cpu, setCpu ] = useState<Cpu | null>(null);
+export const useCpuInfo = (): Cpu[] => {
+  const [ cpus, setCpus ] = useState<Cpu[]>([]);
 
-  const fetchCpu = async () => {
-    const cpu: Cpu = await invoke('get_cpu_info');
-    return cpu;
+  const fetchCpuInfo = async () => {
+    const cpuInfo: Cpu[] = await invoke('get_cpu_info');
+    return cpuInfo;
   };
 
   useEffect(() => {
-    fetchCpu().then((val) => setCpu(val));
+    fetchCpuInfo().then((val) => setCpus(val));
   }, []);
 
-  return cpu;
+  return cpus;
 }
