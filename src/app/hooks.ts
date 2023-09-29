@@ -8,11 +8,11 @@ import { invoke } from "@tauri-apps/api";
 import { useEffect, useState } from "react";
 
 export const useOverviewInfo = (): OverviewInfo => {
-  const [ currentCpu, setCurrentCpu ] = useState<number>(0);
-  const [ currentMemory, setCurrentMemory ] = useState<number>(0);
-  const [ totalMemory, setTotalMemory ] = useState<number>(0);
-  const [ currentDisk, setCurrentDisk ] = useState(0);
-  const [ totalDisk, setTotalDisk ] = useState(0);
+  const [ currentCpuUsage, setCurrentCpuUsage ] = useState<number>(0);
+  const [ currentMemoryUsage, setCurrentMemoryUsage ] = useState<number>(0);
+  const [ totalMemoryAmount, setTotalMemoryAmount ] = useState<number>(0);
+  const [ currentDiskUsage, setCurrentDiskUsage ] = useState(0);
+  const [ totalDiskAmount, setTotalDiskAmount ] = useState(0);
 
   const fetchCpu = async () => {
     const cpuUsage: number = await invoke('get_cpu_usage');;
@@ -40,24 +40,24 @@ export const useOverviewInfo = (): OverviewInfo => {
   };
 
   useEffect(() => {
-    fetchTotalMemory().then((val) => setTotalMemory(val));
-    fetchCurrentDisk().then((val) => setCurrentDisk(val));
-    fetchTotalDisk().then((val) => setTotalDisk(val));
+    fetchTotalMemory().then((val) => setTotalMemoryAmount(val));
+    fetchCurrentDisk().then((val) => setCurrentDiskUsage(val));
+    fetchTotalDisk().then((val) => setTotalDiskAmount(val));
   }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetchCpu().then((val) => setCurrentCpu(val));
-      fetchMemory().then((val) => setCurrentMemory(val));
+      fetchCpu().then((val) => setCurrentCpuUsage(val));
+      fetchMemory().then((val) => setCurrentMemoryUsage(val));
     }, 1000);
     return () => clearInterval(interval);
-  }, [currentCpu, currentMemory]);
+  }, [currentCpuUsage, currentMemoryUsage]);
 
   return {
-    currentCpu,
-    currentMemory,
-    totalMemory,
-    currentDisk,
-    totalDisk,
+    currentCpu: currentCpuUsage,
+    currentMemory: currentMemoryUsage,
+    totalMemory: totalMemoryAmount,
+    currentDisk: currentDiskUsage,
+    totalDisk: totalDiskAmount,
   };
 }
