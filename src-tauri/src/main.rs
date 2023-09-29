@@ -7,7 +7,10 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use app::{cli::Cli, commands::cpu::*, logging::init_logger, states::system::SystemState};
+use app::{
+    cli::Cli, commands::cpu::*, commands::memory::*, logging::init_logger,
+    states::system::SystemState,
+};
 use clap::Parser;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -16,7 +19,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     tauri::Builder::default()
         .manage(SystemState::default())
-        .invoke_handler(tauri::generate_handler![get_cpu_usage])
+        .invoke_handler(tauri::generate_handler![
+            get_cpu_usage,
+            get_memory_usage,
+            get_total_memory
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
     Ok(())
