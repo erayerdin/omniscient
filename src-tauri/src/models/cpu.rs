@@ -8,6 +8,7 @@ use serde::Serialize;
 use sysinfo::CpuExt;
 
 #[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Cpu {
     name: String,
     brand: String,
