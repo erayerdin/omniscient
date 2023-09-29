@@ -18,3 +18,13 @@ type Cpu = {
   vendorId: string,
   frequency: number,
 }
+
+type Disk = {
+  type: "HDD" | "SSD" | null,
+  name: string,
+  fileSystem: string,
+  mountPoint: string,
+  availableSpace: number,
+  totalSpace: number,
+  isRemovable: boolean,
+}
