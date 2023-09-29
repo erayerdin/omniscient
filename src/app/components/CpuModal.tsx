@@ -11,7 +11,7 @@ const CpuModal = ({ isOpen, onOpenChange }: { isOpen: boolean, onOpenChange: () 
   const cpus = useCpuInfo();
   
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="xl">
       <ModalContent>
         {(onClose) => {
           return (
