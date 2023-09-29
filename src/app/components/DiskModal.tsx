@@ -9,6 +9,7 @@ import { useDiskInfo } from '../hooks';
 
 const DiskModal = ({ isOpen, onOpenChange }: { isOpen: boolean, onOpenChange: () => void }) => {
   const disks = useDiskInfo();
+  console.trace("disks", disks);
   
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} size='xl'>

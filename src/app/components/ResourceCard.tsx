@@ -15,8 +15,12 @@ type ResourceCardProps = {
 }
 
 const ResourceCard = ({ label, used, total, footer, onPress }: ResourceCardProps) => {
+  console.trace("params", { label, used, total, footer, onPress });
+
   const value = used / total;
   const valuePercent = value * 100;
+
+  console.trace("value", { value, valuePercent });
 
   let color = "danger";
 
@@ -27,6 +31,8 @@ const ResourceCard = ({ label, used, total, footer, onPress }: ResourceCardProps
   } else if (valuePercent < 90) {
     color = "warning";
   }
+
+  console.trace("color", { color });
 
   return (
     <Card onPress={onPress} isPressable={onPress !== null} className="flex p-sm items-center space-y-2 w-64">

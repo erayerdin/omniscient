@@ -11,6 +11,9 @@ export default function Home() {
   const { isOpen: isCpuModalOpen, onOpen: onCpuModalOpen, onOpenChange: onCpuModalOpenChange } = useDisclosure();
   const { isOpen: isDiskModalOpen, onOpen: onDiskModalOpen, onOpenChange: onDiskModalOpenChange } = useDisclosure();
 
+  console.trace("overview info", { overviewInfo });
+  console.trace("modals", { isCpuModalOpen, isDiskModalOpen });
+
   return (
     <div className="flex">
       {/** header resource cards */}

@@ -14,29 +14,41 @@ export const useOverviewInfo = (): OverviewInfo => {
   const [ currentDiskUsage, setCurrentDiskUsage ] = useState(0);
   const [ totalDiskAmount, setTotalDiskAmount ] = useState(0);
 
+  console.trace("states", { currentCpuUsage, currentMemoryUsage, totalMemoryAmount, currentDiskUsage, totalDiskAmount });
+
   const fetchCpuUsage = async () => {
-    const cpuUsage: number = await invoke('get_cpu_usage');;
+    console.log("Fetching cpu usage...");
+    const cpuUsage: number = await invoke('get_cpu_usage');
+    console.trace("Cpu usage", cpuUsage);
     return cpuUsage;
   };
 
   const fetchMemoryUsage = async () => {
-    const memoryUsage: number = await invoke('get_memory_usage');
-    return memoryUsage / (1024 * 1024 * 1024);
+    console.log("Fetching memory usage...");
+    const memoryUsage: number = (await invoke('get_memory_usage')) as number / (1024 * 1024 * 1024);
+    console.trace("Memory usage", memoryUsage);
+    return memoryUsage;
   };
 
   const fetchTotalMemoryAmount = async () => {
-    const totalMemory: number = await invoke('get_total_memory');
-    return totalMemory / (1024 * 1024 * 1024);
+    console.log("Fetching total memory amount...");
+    const totalMemory: number = (await invoke('get_total_memory')) as number / (1024 * 1024 * 1024);
+    console.trace("Total memory", totalMemory);
+    return totalMemory;
   };
 
   const fetchCurrentDiskUsage = async () => {
-    const diskUsage: number = await invoke('get_disk_usage');
-    return diskUsage / (1024 * 1024 * 1024);
+    console.log("Fetching current disk usage...");
+    const diskUsage: number = (await invoke('get_disk_usage')) as number / (1024 * 1024 * 1024);
+    console.trace("Disk usage", diskUsage);
+    return diskUsage;
   };
 
   const fetchTotalDiskAmount = async () => {
-    const totalDisk: number = await invoke('get_total_disk');
-    return totalDisk / (1024 * 1024 * 1024);
+    console.log("Fetching total disk amount...");
+    const totalDisk: number = (await invoke('get_total_disk')) as number / (1024 * 1024 * 1024);
+    console.trace("Total disk", totalDisk);
+    return totalDisk;
   };
 
   useEffect(() => {
@@ -50,7 +62,10 @@ export const useOverviewInfo = (): OverviewInfo => {
       fetchCpuUsage().then((val) => setCurrentCpuUsage(val));
       fetchMemoryUsage().then((val) => setCurrentMemoryUsage(val));
     }, 1000);
-    return () => clearInterval(interval);
+    return () => {
+      console.info("Clearing fetchCpuUsage and fetchMemoryUsage intervals...");
+      clearInterval(interval);
+    };
   }, [currentCpuUsage, currentMemoryUsage]);
 
   return {
@@ -64,9 +79,12 @@ export const useOverviewInfo = (): OverviewInfo => {
 
 export const useCpuInfo = (): Cpu[] => {
   const [ cpus, setCpus ] = useState<Cpu[]>([]);
+  console.trace("states", { cpus });
 
   const fetchCpuInfo = async () => {
+    console.log("Fetching cpu info...");
     const cpuInfo: Cpu[] = await invoke('get_cpu_info');
+    console.trace("cpu info", cpuInfo);
     return cpuInfo;
   };
 
@@ -79,9 +97,12 @@ export const useCpuInfo = (): Cpu[] => {
 
 export const useDiskInfo = (): Disk[] => {
   const [ disks, setDisks ] = useState<Disk[]>([]);
+  console.trace("states", { disks });
 
   const fetchDiskInfo = async () => {
+    console.log("Fetching disk info...");
     const diskInfo: Disk[] = await invoke('get_disk_info');
+    console.trace("disk info", diskInfo);
     return diskInfo;
   };
 

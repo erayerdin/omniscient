@@ -16,6 +16,8 @@ type NavEntryProps = {
 }
 
 const NavEntry = ({ icon, content, linkTo }: NavEntryProps) => {
+  console.trace("props", { icon, content, linkTo });
+
   return (
     <Link href={linkTo} className='flex p-xs hover:bg-blue-500 hover:rounded-lg'>
       {
