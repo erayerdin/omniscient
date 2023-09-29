@@ -61,3 +61,18 @@ export const useOverviewInfo = (): OverviewInfo => {
     totalDiskAmount: totalDiskAmount,
   };
 }
+
+export const useCpu = (): Cpu | null => {
+  const [ cpu, setCpu ] = useState<Cpu | null>(null);
+
+  const fetchCpu = async () => {
+    const cpu: Cpu = await invoke('get_cpu_info');
+    return cpu;
+  };
+
+  useEffect(() => {
+    fetchCpu().then((val) => setCpu(val));
+  }, []);
+
+  return cpu;
+}
