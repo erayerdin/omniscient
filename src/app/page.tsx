@@ -63,7 +63,7 @@ export default function Home() {
           label="Disk"
           used={overviewInfo.currentDisk}
           total={overviewInfo.totalDisk}
-          footer={(used, total) => <div>{used} / {total} GiB</div>}
+          footer={(used, total) => <div>{used.toFixed(2)} / {total.toFixed(2)} GiB</div>}
         />
       </header>
     </div>
