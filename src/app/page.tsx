@@ -3,6 +3,7 @@
 import { useDisclosure } from "@nextui-org/react";
 import CpuModal from "./components/CpuModal";
 import DiskModal from "./components/DiskModal";
+import NetworkChart from "./components/NetworkChart";
 import ResourceCard from "./components/ResourceCard";
 import { useOverviewInfo } from "./hooks";
 
@@ -15,7 +16,7 @@ export default function Home() {
   console.trace("modals", { isCpuModalOpen, isDiskModalOpen });
 
   return (
-    <div className="flex">
+    <div className="flex flex-col space-y-8">
       {/** header resource cards */}
       <header className="flex w-full justify-center space-x-2">
         <ResourceCard
@@ -39,6 +40,12 @@ export default function Home() {
           onPress={onDiskModalOpen}
         />
       </header>
+
+      {/** Network Chart */}
+      <div className="flex flex-col w-full space-y-4 items-center">
+        <p className="text-4xl">Network</p>
+        <NetworkChart />
+      </div>
 
       {/** Modals */}
       <CpuModal isOpen={isCpuModalOpen} onOpenChange={onCpuModalOpenChange} />
