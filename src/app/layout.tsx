@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className='dark'>
+    <html lang="en" className='dark' onContextMenu={(e) => e.preventDefault()}>
       <body className={inter.className}>
         <Providers>
           <div className="container flex h-screen">
