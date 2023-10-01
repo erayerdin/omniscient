@@ -28,3 +28,12 @@ type Disk = {
   totalSpace: number,
   isRemovable: boolean,
 }
+
+type Metadata = {
+  name: string,
+  version: string,
+  description: string,
+  authors: string[],
+  repositoryUrl: string,
+  license: string,
+}

@@ -8,6 +8,7 @@ import { Card } from '@nextui-org/react'
 import Link from 'next/link'
 import React from 'react'
 import Cog from './icons/Cog'
+import QuestionMarkCircle from './icons/QuestionMarkCircle'
 
 type NavEntryProps = {
   icon?: React.ReactNode,
@@ -39,19 +40,9 @@ const MainNav = () => {
         linkTo='/'
       />
       <NavEntry
-        icon={<Cog />}
-        content={<div>Overview</div>}
-        linkTo='/'
-      />
-      <NavEntry
-        icon={<Cog />}
-        content={<div>Overview</div>}
-        linkTo='/'
-      />
-      <NavEntry
-        icon={<Cog />}
-        content={<div>Overview</div>}
-        linkTo='/'
+        icon={<QuestionMarkCircle />}
+        content={<div>About</div>}
+        linkTo='/about'
       />
     </Card>
   )

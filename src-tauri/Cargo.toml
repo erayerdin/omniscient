@@ -1,15 +1,13 @@
 [package]
 name = "app"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
+description = "An app for system monitoring."
+authors = ["Eray Erdin"]
+license = "MPLv2"
+repository = "https://github.com/erayerdin/omniscient"
 default-run = "app"
 edition = "2021"
 rust-version = "1.60"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
 tauri-build = { version = "1.4.0", features = [] }
@@ -17,7 +15,7 @@ tauri-build = { version = "1.4.0", features = [] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.4.0", features = [] }
+tauri = { version = "1.4.0", features = [ "shell-all"] }
 log = "0.4.20"
 fern = "0.6.2"
 clap = "4.4.6"
@@ -30,4 +28,4 @@ sysinfo = "0.29.10"
 # this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.
 # If you use cargo directly instead of tauri's cli you can use this feature flag to switch between tauri's `dev` and `build` modes.
 # DO NOT REMOVE!!
-custom-protocol = [ "tauri/custom-protocol" ]
+custom-protocol = ["tauri/custom-protocol"]
