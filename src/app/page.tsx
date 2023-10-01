@@ -1,9 +1,55 @@
 "use client";
 
-
+import { useDisclosure } from "@nextui-org/react";
+import CpuModal from "./components/CpuModal";
+import DiskModal from "./components/DiskModal";
+import NetworkIndicator from "./components/NetworkIndicator";
+import ResourceCard from "./components/ResourceCard";
+import { useOverviewInfo } from "./hooks";
 
 export default function Home() {
+  const overviewInfo = useOverviewInfo();
+  const { isOpen: isCpuModalOpen, onOpen: onCpuModalOpen, onOpenChange: onCpuModalOpenChange } = useDisclosure();
+  const { isOpen: isDiskModalOpen, onOpen: onDiskModalOpen, onOpenChange: onDiskModalOpenChange } = useDisclosure();
+
+  console.trace("overview info", { overviewInfo });
+  console.trace("modals", { isCpuModalOpen, isDiskModalOpen });
+
   return (
-    <h1>Hello world!</h1>
+    <div className="flex flex-col space-y-8">
+      {/** header resource cards */}
+      <header className="flex w-full justify-center space-x-2">
+        <ResourceCard
+          label="CPU"
+          used={overviewInfo.currentCpuUsage}
+          total={100}
+          footer={(used, total) => <div>{(used / total * 100).toFixed(2)}%</div>}
+          onPress={onCpuModalOpen}
+        />
+        <ResourceCard
+          label="Memory"
+          used={overviewInfo.currentMemoryUsage}
+          total={overviewInfo.totalMemoryAmount}
+          footer={(used, total) => <div>{used.toFixed(2)} / {total.toFixed(2)} GiB</div>}
+        />
+        <ResourceCard
+          label="Disk"
+          used={overviewInfo.currentDiskUsage}
+          total={overviewInfo.totalDiskAmount}
+          footer={(used, total) => <div>{used.toFixed(2)} / {total.toFixed(2)} GiB</div>}
+          onPress={onDiskModalOpen}
+        />
+      </header>
+
+      {/** Network Chart */}
+      <div className="flex flex-col w-full space-y-4 items-center">
+        <p className="text-4xl">Network</p>
+        <NetworkIndicator />
+      </div>
+
+      {/** Modals */}
+      <CpuModal isOpen={isCpuModalOpen} onOpenChange={onCpuModalOpenChange} />
+      <DiskModal isOpen={isDiskModalOpen} onOpenChange={onDiskModalOpenChange} />
+    </div>
   )
 }

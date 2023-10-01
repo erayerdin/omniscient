@@ -9,10 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@datastructures-js/queue": "^4.2.3",
     "@nextui-org/react": "^2.1.13",
+    "@tauri-apps/api": "^1.5.0",
+    "chart.js": "^4.4.0",
     "framer-motion": "^10.16.4",
     "next": "latest",
     "react": "latest",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "latest"
   },
   "devDependencies": {
