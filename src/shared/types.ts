@@ -34,6 +34,6 @@ type Metadata = {
   version: string,
   description: string,
   authors: string[],
-  repository_url: string,
+  repositoryUrl: string,
   license: string,
 }

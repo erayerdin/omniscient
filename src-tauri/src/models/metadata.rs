@@ -7,6 +7,7 @@
 use serde::Serialize;
 
 #[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Metadata<'a> {
     name: &'a str,
     version: &'a str,
