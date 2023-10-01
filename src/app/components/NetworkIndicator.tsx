@@ -66,9 +66,9 @@ const NetworkIndicator = () => {
 
   const fetchTransmittedBytes = async () => {
     console.log("Fetching received bytes...");
-    const random = Math.random() * (8 * 1024 * 1024 * 1024);
-    console.trace("received bytes", random);
-    return random;
+    const amount: number = await invoke('get_network_transmitted_usage');
+    console.trace("transmitted bytes", amount);
+    return amount;
   }
 
   useEffect(() => {
