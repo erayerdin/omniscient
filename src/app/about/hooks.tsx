@@ -8,10 +8,12 @@ import { invoke } from "@tauri-apps/api";
 import { useEffect, useState } from "react";
 
 export const useMetadata = () => {
+  console.log("Using metadata...");
   const [ metadata, setMetadata ] = useState<Metadata | null>(null);
+  console.trace("state", { metadata });
 
   useEffect(() => {
-    invoke<Metadata>("getMetadata")
+    invoke<Metadata>("get_metadata")
       .then(setMetadata)
       .catch((e) => console.error(e));
   }, []);
