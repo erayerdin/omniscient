@@ -8,6 +8,7 @@ import { Card } from '@nextui-org/react'
 import Link from 'next/link'
 import React from 'react'
 import Cog from './icons/Cog'
+import ListBullet from './icons/ListBullet'
 import QuestionMarkCircle from './icons/QuestionMarkCircle'
 
 type NavEntryProps = {
@@ -38,6 +39,11 @@ const MainNav = () => {
         icon={<Cog />}
         content={<div>Overview</div>}
         linkTo='/'
+      />
+      <NavEntry
+        icon={<ListBullet />}
+        content={<div>Processes</div>}
+        linkTo='/process-list'
       />
       <NavEntry
         icon={<QuestionMarkCircle />}
