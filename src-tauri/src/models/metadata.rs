@@ -19,7 +19,7 @@ pub struct Metadata<'a> {
 impl<'a> Default for Metadata<'a> {
     fn default() -> Self {
         Self {
-            name: env!("CARGO_PKG_NAME"),
+            name: env!("APP_NAME"),
             version: env!("CARGO_PKG_VERSION"),
             description: env!("CARGO_PKG_DESCRIPTION"),
             authors: env!("CARGO_PKG_AUTHORS").split(";").collect(),
