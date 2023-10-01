@@ -7,11 +7,12 @@
 import ArrowSmallDown from "@/components/icons/ArrowSmallDown";
 import ArrowSmallUp from "@/components/icons/ArrowSmallUp";
 import { Card, CardBody } from "@nextui-org/react";
+import { invoke } from "@tauri-apps/api";
 import { useEffect, useState } from "react";
 
 type NetworkCardProps = {
   bytes: number,
-  isDownload: boolean,
+  isDownload?: boolean,
 }
 
 const NetworkCard = ({ bytes, isDownload }: NetworkCardProps) => {
@@ -58,9 +59,9 @@ const NetworkIndicator = () => {
 
   const fetchReceivedBytes = async () => {
     console.log("Fetching received bytes...");
-    const random = Math.random() * (8 * 1024 * 1024 * 1024);
-    console.trace("received bytes", random);
-    return random;
+    const amount: number = await invoke('get_network_received_usage');
+    console.trace("received bytes", amount);
+    return amount;
   }
 
   const fetchTransmittedBytes = async () => {
@@ -85,7 +86,7 @@ const NetworkIndicator = () => {
   return (
     <div className="flex space-x-2">
       <NetworkCard isDownload bytes={receivedBytes} />
-      <NetworkCard isDownload={false} bytes={transmittedBytes} />
+      <NetworkCard bytes={transmittedBytes} />
     </div>
   )
 }
