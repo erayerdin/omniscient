@@ -4,16 +4,57 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { Queue } from "@datastructures-js/queue";
-import { colors } from "@nextui-org/react";
+import ArrowSmallDown from "@/components/icons/ArrowSmallDown";
+import ArrowSmallUp from "@/components/icons/ArrowSmallUp";
+import { Card, CardBody } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { Line } from "react-chartjs-2";
 
+type NetworkCardProps = {
+  bytes: number,
+  isDownload: boolean,
+}
+
+const NetworkCard = ({ bytes, isDownload }: NetworkCardProps) => {
+  const kilobytes = bytes / 1024;
+  const megabytes = kilobytes / 1024;
+  const gigabytes = megabytes / 1024;
+  
+  let humanReadable: string;
+  let measureType: "kbps" | "mbps" | "gbps";
+
+  humanReadable = kilobytes.toFixed(2);
+  measureType = "kbps";
+
+  if (kilobytes > 1024) {
+    humanReadable = megabytes.toFixed(2);
+    measureType = "mbps";
+  }
+  
+  if (megabytes > 1024) {
+    humanReadable = gigabytes.toFixed(2);
+    measureType = "gbps";
+  }
+
+  return (
+    <Card>
+      <CardBody className="flex w-40">
+        {
+          isDownload
+            ? <ArrowSmallDown />
+            : <ArrowSmallUp />
+        }
+        <span>
+          {humanReadable} {measureType}
+        </span>
+      </CardBody>
+    </Card>
+  );
+}
 
 const NetworkIndicator = () => {
-  const [ receivedBytesQueue, setReceivedBytesQueue ] = useState<Queue<number>>(Queue.fromArray(Array(20).fill(0)));
-  const [ transmittedBytesQueue, setTransmittedBytesQueue ] = useState<Queue<number>>(Queue.fromArray(Array(20).fill(0)));
-  console.trace("state", { receivedBytesQueue, transmittedBytesQueue });
+  const [ receivedBytes, setReceivedBytes ] = useState<number>(0);
+  const [ transmittedBytes, setTransmittedBytes ] = useState<number>(0);
+  console.trace("state", { receivedBytes, transmittedBytes });
 
   const fetchReceivedBytes = async () => {
     console.log("Fetching received bytes...");
@@ -33,44 +74,18 @@ const NetworkIndicator = () => {
     const interval = setInterval(() => {
       Promise.all([fetchReceivedBytes(), fetchTransmittedBytes()]).then((val) => {
         const [ receivedBytes, transmittedBytes ] = val;
-
-        receivedBytesQueue.push(receivedBytes);
-        receivedBytesQueue.pop();
-        transmittedBytesQueue.push(transmittedBytes);
-        transmittedBytesQueue.pop();
-
-        setReceivedBytesQueue(_ => receivedBytesQueue);
-        setTransmittedBytesQueue(_ => transmittedBytesQueue);
+        setReceivedBytes(receivedBytes);
+        setTransmittedBytes(transmittedBytes);
       });
-    });
+    }, 1000);
 
     return () => clearInterval(interval);
-  }, [receivedBytesQueue, transmittedBytesQueue]);
-
-  const receivedMegabytesArray = receivedBytesQueue.toArray().map(bytes => bytes / (1024 * 1024));
-  const transmittedMegabytesArray = transmittedBytesQueue.toArray().map(bytes => bytes / (1024 * 1024));
+  }, [receivedBytes, transmittedBytes]);
 
   return (
-    <div className="flex flex-col">
-      <Line
-        width={750}
-        height={350}
-        data={{
-          datasets: [
-            {
-              label: "Download",
-              borderColor: colors.blue[500],
-              data: receivedMegabytesArray,
-            },
-            {
-              label: "Upload",
-              borderColor: colors.green[500],
-              data: transmittedMegabytesArray,
-            },
-          ],
-          labels: Array<string>(20).fill('0').map((_, i) => `${i}s`),
-        }}
-      />
+    <div className="flex space-x-2">
+      <NetworkCard isDownload bytes={receivedBytes} />
+      <NetworkCard isDownload={false} bytes={transmittedBytes} />
     </div>
   )
 }
