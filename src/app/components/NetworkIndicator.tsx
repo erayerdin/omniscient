@@ -10,9 +10,9 @@ import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 
 
-const NetworkChart = () => {
-  const [ receivedBytesQueue, setReceivedBytesStack ] = useState<Queue<number>>(Queue.fromArray(Array(20).fill(0)));
-  const [ transmittedBytesQueue, setTransmittedBytesStack ] = useState<Queue<number>>(Queue.fromArray(Array(20).fill(0)));
+const NetworkIndicator = () => {
+  const [ receivedBytesQueue, setReceivedBytesQueue ] = useState<Queue<number>>(Queue.fromArray(Array(20).fill(0)));
+  const [ transmittedBytesQueue, setTransmittedBytesQueue ] = useState<Queue<number>>(Queue.fromArray(Array(20).fill(0)));
   console.trace("state", { receivedBytesQueue, transmittedBytesQueue });
 
   const fetchReceivedBytes = async () => {
@@ -39,8 +39,8 @@ const NetworkChart = () => {
         transmittedBytesQueue.push(transmittedBytes);
         transmittedBytesQueue.pop();
 
-        setReceivedBytesStack(_ => receivedBytesQueue);
-        setTransmittedBytesStack(_ => transmittedBytesQueue);
+        setReceivedBytesQueue(_ => receivedBytesQueue);
+        setTransmittedBytesQueue(_ => transmittedBytesQueue);
       });
     });
 
@@ -75,4 +75,4 @@ const NetworkChart = () => {
   )
 }
 
-export default NetworkChart
+export default NetworkIndicator

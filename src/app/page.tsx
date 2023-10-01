@@ -3,7 +3,7 @@
 import { useDisclosure } from "@nextui-org/react";
 import CpuModal from "./components/CpuModal";
 import DiskModal from "./components/DiskModal";
-import NetworkChart from "./components/NetworkChart";
+import NetworkIndicator from "./components/NetworkIndicator";
 import ResourceCard from "./components/ResourceCard";
 import { useOverviewInfo } from "./hooks";
 
@@ -44,7 +44,7 @@ export default function Home() {
       {/** Network Chart */}
       <div className="flex flex-col w-full space-y-4 items-center">
         <p className="text-4xl">Network</p>
-        <NetworkChart />
+        <NetworkIndicator />
       </div>
 
       {/** Modals */}
