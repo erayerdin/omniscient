@@ -1,10 +1,10 @@
 [package]
 name = "app"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
+description = "An app for system monitoring."
+authors = ["Eray Erdin"]
+license = "MPLv2"
+repository = "https://github.com/erayerdin/omniscient"
 default-run = "app"
 edition = "2021"
 rust-version = "1.60"
