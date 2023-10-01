@@ -28,6 +28,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             get_total_disk,
             get_disk_info,
             get_network_received_usage,
+            get_network_transmitted_usage,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
