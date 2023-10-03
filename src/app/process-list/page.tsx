@@ -50,7 +50,19 @@ function ProcessListPage() {
     const processes: Process[] = generateFakeProcesses();
     console.trace("processes", processes);
     return processes;
-  };
+  }
+
+  const fetchCpuUsage = async ({ pid }: Process) => {
+    console.log("Fetching CPU usage...");
+    console.log("pid", pid);
+    return Math.random() * 100;
+  }
+
+  const fetchMemoryUsage = async ({ pid }: Process) => {
+    console.log("Fetching memory usage...");
+    console.log("pid", pid);
+    return Math.random() * 8 * 1024 * 1024 * 1024; // 8 GB
+  }
 
   const sortProcesses = (a: Process, b: Process, sortDescriptor: SortDescriptor) => {
     console.log("Sorting processes...");
@@ -76,7 +88,7 @@ function ProcessListPage() {
     }
 
     return cmp;
-  };
+  }
 
   const processes = useAsyncList<Process>({
     load: async ({ sortDescriptor, filterText }) => {
