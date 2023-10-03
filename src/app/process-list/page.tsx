@@ -71,20 +71,21 @@ function ProcessListPage() {
   };
 
   const processes = useAsyncList<Process>({
-    load: async () => {
+    load: async ({ sortDescriptor }) => {
       console.log("Loading processes...");
 
       setLoading(_ => true);
-      const processes = await fetchProcesses();
+      const fetchedProcesses = await fetchProcesses();
       setLoading(_ => false);
 
-      return { items: processes };
+      return { items: fetchedProcesses, sortDescriptor };
     },
     sort: async ({ items, sortDescriptor }) => {
       return {
         items: items.sort((a, b) => sortProcesses(a, b, sortDescriptor)),
       };
     },
+    initialSortDescriptor: { column: "memoryUsage", direction: "descending" },
   });
 
   return (
