@@ -10,7 +10,9 @@ import { Input, SortDescriptor, Spinner, Table, TableBody, TableCell, TableColum
 import { useAsyncList } from "@react-stately/data";
 import { useState } from "react";
 
-const generateFakeProcesses = () => {
+const fakeItemCount = 100;
+
+const generateFakeName = () => {
   const genFakeName = (len: number) => {
     const symbols = [
       "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u",
@@ -21,8 +23,14 @@ const generateFakeProcesses = () => {
     return Array(len).fill(0).map(() => symbols[Math.floor(symbols.length * Math.random())]).join('');
   }
 
-  return Array(100).fill(0).map((_, i): Process => {
-    const name = genFakeName(5);
+  return genFakeName(5);
+}
+
+const fakeNames = Array(fakeItemCount).fill(0).map(() => generateFakeName());
+
+const generateFakeProcesses = () => {
+  return Array(fakeItemCount).fill(0).map((_, i): Process => {
+    const name = fakeNames[i];
     const path = `/foo/${name}`;
 
     return {
