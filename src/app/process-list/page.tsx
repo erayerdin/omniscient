@@ -101,7 +101,7 @@ function ProcessListPage() {
             <TableColumn key="cpuUsage" allowsSorting>CPU</TableColumn>
             <TableColumn key="memoryUsage" allowsSorting>Memory</TableColumn>
           </TableHeader>
-          <TableBody loadingContent={<Spinner />} items={processes.items}>
+          <TableBody loadingContent={<Spinner />} items={processes.items} isLoading={isLoading}>
             {(p) => {
               const cpuUsage = p.cpuUsage.toFixed(2);
               
