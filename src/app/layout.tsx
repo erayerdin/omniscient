@@ -27,7 +27,7 @@ export default function RootLayout({
               <MainNav />
             </div>
             <div className="w-3/5 lg:w-3/4 m-sm">
-              <div>{children}</div>
+              {children}
             </div>
           </div>
         </Providers>
