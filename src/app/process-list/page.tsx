@@ -71,14 +71,20 @@ function ProcessListPage() {
   };
 
   const processes = useAsyncList<Process>({
-    load: async ({ sortDescriptor }) => {
+    load: async ({ sortDescriptor, filterText }) => {
       console.log("Loading processes...");
 
       setLoading(_ => true);
-      const fetchedProcesses = await fetchProcesses();
+      const fetchedProcesses = (await fetchProcesses()).filter(({ path }) => {
+        if (filterText?.length !== 0) {
+          return path.trim().toLowerCase().includes(filterText ?? "");
+        }
+
+        return true;
+      });
       setLoading(_ => false);
 
-      return { items: fetchedProcesses, sortDescriptor };
+      return { items: fetchedProcesses, sortDescriptor, filterText };
     },
     sort: async ({ items, sortDescriptor }) => {
       return {
@@ -86,11 +92,21 @@ function ProcessListPage() {
       };
     },
     initialSortDescriptor: { column: "memoryUsage", direction: "descending" },
+    initialFilterText: "",
   });
 
   return (
     <div className="flex flex-col space-y-2">
-      <Input type="search" placeholder="Search for processes" />
+      <Input
+        type="search"
+        placeholder="Search for processes"
+        onChange={(e) => {
+          console.log("Process search has changed.");
+          const value = e.target.value.trim().toLowerCase();
+          console.trace("sanitized value", value);
+          processes.setFilterText(value);
+        }}
+      />
       <div className="">
         <Table
           isHeaderSticky
