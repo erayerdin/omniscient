@@ -6,7 +6,7 @@
 
 "use client";
 
-import { Input, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
+import { Input, SortDescriptor, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
 import { useAsyncList } from "@react-stately/data";
 import { useState } from "react";
 
@@ -44,6 +44,32 @@ function ProcessListPage() {
     return processes;
   };
 
+  const sortProcesses = (a: Process, b: Process, sortDescriptor: SortDescriptor) => {
+    console.log("Sorting processes...");
+    type ProcessKey = keyof typeof a;
+
+    let { column, direction } = sortDescriptor;
+    console.log("sort descriptor", sortDescriptor);
+
+    let [ first, second ] = [
+      a[column as ProcessKey],
+      b[column as ProcessKey],
+    ];
+    
+    let cmp: number;
+    if ([typeof first, typeof second].every(((t) => t == "number"))) {
+      cmp = first < second ? -1 : 1;
+    } else {
+      cmp = parseInt(first.toString()) < parseInt(second.toString()) ? -1 : 1;
+    }
+
+    if (direction == "descending") {
+      cmp *= -1;
+    }
+
+    return cmp;
+  };
+
   const processes = useAsyncList<Process>({
     load: async () => {
       console.log("Loading processes...");
@@ -56,31 +82,7 @@ function ProcessListPage() {
     },
     sort: async ({ items, sortDescriptor }) => {
       return {
-        items: items.sort((a, b) => {
-          console.log("Sorting processes...");
-          type ProcessKey = keyof typeof a;
-
-          let { column, direction } = sortDescriptor;
-          console.log("sort descriptor", sortDescriptor);
-
-          let [ first, second ] = [
-            a[column as ProcessKey],
-            b[column as ProcessKey],
-          ];
-          
-          let cmp: number;
-          if ([typeof first, typeof second].every(((t) => t == "number"))) {
-            cmp = first < second ? -1 : 1;
-          } else {
-            cmp = parseInt(first.toString()) < parseInt(second.toString()) ? -1 : 1;
-          }
-
-          if (direction == "descending") {
-            cmp *= -1;
-          }
-
-          return cmp;
-        }),
+        items: items.sort((a, b) => sortProcesses(a, b, sortDescriptor)),
       };
     },
   });
