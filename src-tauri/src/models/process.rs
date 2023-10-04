@@ -7,6 +7,8 @@
 use serde::{Deserialize, Serialize};
 use sysinfo::{PidExt, ProcessExt};
 
+use crate::OmniscientError;
+
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Process {
@@ -22,14 +24,24 @@ impl Process {
     }
 }
 
-impl From<(&sysinfo::Pid, &sysinfo::Process)> for Process {
-    fn from((pid, process): (&sysinfo::Pid, &sysinfo::Process)) -> Self {
-        Process {
+impl TryFrom<(&sysinfo::Pid, &sysinfo::Process, usize)> for Process {
+    type Error = OmniscientError;
+
+    fn try_from(
+        (pid, process, core_count): (&sysinfo::Pid, &sysinfo::Process, usize),
+    ) -> Result<Self, Self::Error> {
+        let core_count =
+            u8::try_from(core_count).map_err(|_| OmniscientError::TypeConversionError {
+                from: "usize",
+                to: "u8",
+            })?;
+
+        Ok(Process {
             pid: pid.as_u32(),
             path: String::from(process.exe().to_path_buf().to_string_lossy()),
-            cpu_usage: process.cpu_usage(),
+            cpu_usage: process.cpu_usage() / f32::from(core_count),
             memory_usage: process.virtual_memory(),
-        }
+        })
     }
 }
 

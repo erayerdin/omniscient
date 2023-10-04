@@ -35,7 +35,15 @@ pub fn get_processes(
     let mut processes: Vec<Process> = system
         .processes()
         .iter()
-        .map(Process::from)
+        .filter_map(|p| {
+            match Process::try_from((p.0, p.1, system.physical_core_count().unwrap_or(1))) {
+                Ok(p) => Some(p),
+                Err(e) => {
+                    log::warn!("An error occured while initializing a process: {e}");
+                    None
+                }
+            }
+        })
         .filter(|p| !p.path().is_empty())
         .filter(|p| match filter_text.clone() {
             Some(value) => {
