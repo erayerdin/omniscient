@@ -5,6 +5,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import { SortDescriptor } from "@nextui-org/react";
+import { invoke } from "@tauri-apps/api";
 import { useEffect, useState } from "react";
 
 const fakeItemCount = 100;
@@ -45,7 +46,7 @@ export const useProcesses = () => {
 
   const fetchProcesses = async () => {
     console.log("Fetcing processes...");
-    const processes: Process[] = generateFakeProcesses();
+    const processes: Process[] = await invoke('get_processes');
     console.trace("processes", processes);
     return processes;
   }
