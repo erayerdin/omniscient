@@ -10,7 +10,7 @@ import { Input, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, 
 import { useProcesses } from "./hooks";
 
 function ProcessListPage() {
-  const { processes, sortDescriptor, setSortDescriptor } = useProcesses();
+  const { processes, sortDescriptor, setSortDescriptor, killProcess } = useProcesses();
 
   return (
     <div className="flex flex-col space-y-2">
@@ -32,6 +32,13 @@ function ProcessListPage() {
           onSortChange={(sortDescriptor) => {
             setSortDescriptor(sortDescriptor);
             console.trace("Sort descriptor changed", sortDescriptor);
+          }}
+          onRowAction={(key) => {
+            const process = processes.find((p) => p.pid === key);
+            
+            if (process !== undefined) {
+              killProcess(process);
+            }
           }}
         >
           <TableHeader>

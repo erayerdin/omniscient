@@ -50,6 +50,10 @@ export const useProcesses = () => {
     return processes;
   }
 
+  const killProcess = async ({ pid }: Process) => {
+    console.log("Killing process...", pid);
+  }
+
   const sortProcesses = (processes: Process[], sortDescriptor: SortDescriptor) => {
     const sortedProcesses = processes.sort((a, b) => {
       type ProcessKeyType = keyof typeof a;
@@ -88,5 +92,5 @@ export const useProcesses = () => {
     return () => clearInterval(interval)
   }, [sortDescriptor]);
 
-  return { processes, sortDescriptor, setSortDescriptor };
+  return { processes, sortDescriptor, setSortDescriptor, killProcess };
 }
