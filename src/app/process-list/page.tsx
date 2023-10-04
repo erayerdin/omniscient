@@ -80,10 +80,14 @@ function ProcessListPage() {
   }
 
   useEffect(() => {
-    fetchProcesses().then((val) => {
-      const sortedProcesses = sortProcesses(val, sortDescriptor);
-      setProcesses(sortedProcesses);
-    });
+    const interval = setInterval(() => {
+      fetchProcesses().then((val) => {
+        const sortedProcesses = sortProcesses(val, sortDescriptor);
+        setProcesses(sortedProcesses);
+      });
+    }, 1000);
+    
+    return () => clearInterval(interval)
   }, [sortDescriptor]);
 
   return (
