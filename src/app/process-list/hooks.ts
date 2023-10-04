@@ -42,6 +42,7 @@ const generateFakeProcesses = () => {
 
 export const useProcesses = () => {
   const [ processes, setProcesses ] = useState<Process[]>([]);
+  const [ filterText, setFilterText ] = useState<string>("");
   const [ sortDescriptor, setSortDescriptor ] = useState<SortDescriptor>({ column: "memoryUsage", direction: "descending" });
 
   const fetchProcesses = async () => {
@@ -84,14 +85,25 @@ export const useProcesses = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      console.log("Fetching processes...");
       fetchProcesses().then((val) => {
-        const sortedProcesses = sortProcesses(val, sortDescriptor);
-        setProcesses(sortedProcesses);
+        console.log("Sorting processes...");
+        console.trace("sort descriptor", sortDescriptor);
+        let processes = sortProcesses(val, sortDescriptor);
+        
+        if (filterText.length > 0) {
+          console.log("Filtering processes...");
+          const sanitizedFilterText = filterText.trim().toLowerCase();
+          console.trace("sanitized filter text", sanitizedFilterText);
+          processes = processes.filter((p) => p.path.toLowerCase().includes(sanitizedFilterText));
+        }
+
+        setProcesses(processes);
       });
     }, 1000);
     
     return () => clearInterval(interval)
-  }, [sortDescriptor]);
+  }, [filterText, sortDescriptor]);
 
-  return { processes, sortDescriptor, setSortDescriptor, killProcess };
+  return { processes, filterText, setFilterText, sortDescriptor, setSortDescriptor, killProcess };
 }

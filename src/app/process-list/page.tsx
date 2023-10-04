@@ -10,7 +10,7 @@ import { Input, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, 
 import { useProcesses } from "./hooks";
 
 function ProcessListPage() {
-  const { processes, sortDescriptor, setSortDescriptor, killProcess } = useProcesses();
+  const { processes, filterText, setFilterText, sortDescriptor, setSortDescriptor, killProcess } = useProcesses();
 
   return (
     <div className="flex flex-col space-y-2">
@@ -19,9 +19,8 @@ function ProcessListPage() {
         placeholder="Search for processes"
         onChange={(e) => {
           console.log("Process search has changed.");
-          const value = e.target.value.trim().toLowerCase();
-          console.trace("sanitized value", value);
-          // processes.setFilterText(value);
+          const value = e.target.value;
+          setFilterText(value);
         }}
       />
       <div className="">
