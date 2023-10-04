@@ -9,7 +9,7 @@
 
 use app::{
     cli::Cli, commands::cpu::*, commands::disk::*, commands::memory::*, commands::metadata::*,
-    commands::network::*, logging::init_logger, states::system::SystemState,
+    commands::network::*, commands::process::*, logging::init_logger, states::system::SystemState,
 };
 use clap::Parser;
 
@@ -30,6 +30,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             get_network_received_usage,
             get_network_transmitted_usage,
             get_metadata,
+            get_processes,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
