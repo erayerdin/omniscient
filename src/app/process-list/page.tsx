@@ -7,8 +7,7 @@
 "use client";
 
 import { Input, SortDescriptor, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
-import { useAsyncList } from "@react-stately/data";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const fakeItemCount = 100;
 
@@ -43,7 +42,8 @@ const generateFakeProcesses = () => {
 }
 
 function ProcessListPage() {
-  const [ isLoading, setLoading ] = useState<boolean>(true);
+  const [ processes, setProcesses ] = useState<Process[]>([]);
+  const [ sortDescriptor, setSortDescriptor ] = useState<SortDescriptor>({ column: "memoryUsage", direction: "descending" });
 
   const fetchProcesses = async () => {
     console.log("Fetcing processes...");
@@ -52,68 +52,39 @@ function ProcessListPage() {
     return processes;
   }
 
-  const fetchCpuUsage = async ({ pid }: Process) => {
-    console.log("Fetching CPU usage...");
-    console.log("pid", pid);
-    return Math.random() * 100;
+  const sortProcesses = (processes: Process[], sortDescriptor: SortDescriptor) => {
+    const sortedProcesses = processes.sort((a, b) => {
+      type ProcessKeyType = keyof typeof a;
+      const { column, direction } = sortDescriptor;
+
+      const [ first, second ] = [
+        a[column as ProcessKeyType],
+        b[column as ProcessKeyType],
+      ];
+
+      let cmp: number;
+      if ([typeof first, typeof second].includes("number")) {
+        cmp = first < second ? -1 : 1;
+      } else {
+        cmp = parseInt(first.toString()) < parseInt(second.toString()) ? -1 : 1;
+      }
+
+      if (direction === "ascending") {
+        cmp *= -1;
+      }
+
+      return cmp;
+    });
+
+    return sortedProcesses;
   }
 
-  const fetchMemoryUsage = async ({ pid }: Process) => {
-    console.log("Fetching memory usage...");
-    console.log("pid", pid);
-    return Math.random() * 8 * 1024 * 1024 * 1024; // 8 GB
-  }
-
-  const sortProcesses = (a: Process, b: Process, sortDescriptor: SortDescriptor) => {
-    console.log("Sorting processes...");
-    type ProcessKey = keyof typeof a;
-
-    let { column, direction } = sortDescriptor;
-    console.log("sort descriptor", sortDescriptor);
-
-    let [ first, second ] = [
-      a[column as ProcessKey],
-      b[column as ProcessKey],
-    ];
-    
-    let cmp: number;
-    if ([typeof first, typeof second].every(((t) => t == "number"))) {
-      cmp = first < second ? -1 : 1;
-    } else {
-      cmp = parseInt(first.toString()) < parseInt(second.toString()) ? -1 : 1;
-    }
-
-    if (direction == "descending") {
-      cmp *= -1;
-    }
-
-    return cmp;
-  }
-
-  const processes = useAsyncList<Process>({
-    load: async ({ sortDescriptor, filterText }) => {
-      console.log("Loading processes...");
-
-      setLoading(_ => true);
-      const fetchedProcesses = (await fetchProcesses()).filter(({ path }) => {
-        if (filterText?.length !== 0) {
-          return path.trim().toLowerCase().includes(filterText ?? "");
-        }
-
-        return true;
-      });
-      setLoading(_ => false);
-
-      return { items: fetchedProcesses, sortDescriptor, filterText };
-    },
-    sort: async ({ items, sortDescriptor }) => {
-      return {
-        items: items.sort((a, b) => sortProcesses(a, b, sortDescriptor)),
-      };
-    },
-    initialSortDescriptor: { column: "memoryUsage", direction: "descending" },
-    initialFilterText: "",
-  });
+  useEffect(() => {
+    fetchProcesses().then((val) => {
+      const sortedProcesses = sortProcesses(val, sortDescriptor);
+      setProcesses(sortedProcesses);
+    });
+  }, [sortDescriptor]);
 
   return (
     <div className="flex flex-col space-y-2">
@@ -124,15 +95,18 @@ function ProcessListPage() {
           console.log("Process search has changed.");
           const value = e.target.value.trim().toLowerCase();
           console.trace("sanitized value", value);
-          processes.setFilterText(value);
+          // processes.setFilterText(value);
         }}
       />
       <div className="">
         <Table
           isHeaderSticky
           className="overflow-y-scroll h-screen"
-          sortDescriptor={processes.sortDescriptor}
-          onSortChange={processes.sort}
+          sortDescriptor={sortDescriptor}
+          onSortChange={(sortDescriptor) => {
+            setSortDescriptor(sortDescriptor);
+            console.trace("Sort descriptor changed", sortDescriptor);
+          }}
         >
           <TableHeader>
             <TableColumn>PID</TableColumn>
@@ -140,7 +114,7 @@ function ProcessListPage() {
             <TableColumn key="cpuUsage" allowsSorting>CPU</TableColumn>
             <TableColumn key="memoryUsage" allowsSorting>Memory</TableColumn>
           </TableHeader>
-          <TableBody loadingContent={<Spinner />} items={processes.items} isLoading={isLoading}>
+          <TableBody loadingContent={<Spinner />} items={processes}>
             {(p) => {
               const cpuUsage = p.cpuUsage.toFixed(2);
               
