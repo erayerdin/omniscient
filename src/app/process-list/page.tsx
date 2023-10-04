@@ -7,6 +7,7 @@
 "use client";
 
 import { Input, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
+import Marquee from "react-fast-marquee";
 import { useProcesses } from "./hooks";
 
 function ProcessListPage() {
@@ -28,6 +29,7 @@ function ProcessListPage() {
         <Table
           isHeaderSticky
           className="overflow-y-scroll h-screen"
+          layout="fixed"
           sortDescriptor={sortDescriptor}
           onSortChange={(sortDescriptor) => {
             setSortDescriptor(sortDescriptor);
@@ -75,7 +77,9 @@ function ProcessListPage() {
               return (
                 <TableRow key={p.pid}>
                   <TableCell>{p.pid}</TableCell>
-                  <TableCell>{p.path}</TableCell>
+                  <TableCell>
+                    <Marquee pauseOnHover delay={3}>{p.path}</Marquee>
+                  </TableCell>
                   <TableCell>{cpuUsage}%</TableCell>
                   <TableCell>{memoryUsageHumanReadable} {memoryUsageMeasureType}</TableCell>
                 </TableRow>
