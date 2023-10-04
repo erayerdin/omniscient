@@ -57,16 +57,16 @@ pub fn get_processes(
 
     processes.sort_by(|a, b| match column {
         ProcessColumn::Path => match direction {
-            ProcessSortDirection::Ascending => a.path().cmp(b.path()),
-            ProcessSortDirection::Descending => b.path().cmp(a.path()),
+            ProcessSortDirection::Ascending => b.path().cmp(a.path()),
+            ProcessSortDirection::Descending => a.path().cmp(b.path()),
         },
         ProcessColumn::CpuUsage => match direction {
-            ProcessSortDirection::Ascending => a.cpu_usage.total_cmp(&b.cpu_usage),
-            ProcessSortDirection::Descending => b.cpu_usage.total_cmp(&a.cpu_usage),
+            ProcessSortDirection::Ascending => b.cpu_usage.total_cmp(&a.cpu_usage),
+            ProcessSortDirection::Descending => a.cpu_usage.total_cmp(&b.cpu_usage),
         },
         ProcessColumn::MemoryUsage => match direction {
-            ProcessSortDirection::Ascending => a.memory_usage.cmp(&b.memory_usage),
-            ProcessSortDirection::Descending => b.memory_usage.cmp(&a.memory_usage),
+            ProcessSortDirection::Ascending => b.memory_usage.cmp(&a.memory_usage),
+            ProcessSortDirection::Descending => a.memory_usage.cmp(&b.memory_usage),
         },
     });
 
