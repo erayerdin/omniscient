@@ -45,9 +45,9 @@ export const useProcesses = () => {
   const [ filterText, setFilterText ] = useState<string>("");
   const [ sortDescriptor, setSortDescriptor ] = useState<SortDescriptor>({ column: "memoryUsage", direction: "descending" });
 
-  const fetchProcesses = async () => {
+  const fetchProcesses = async (sortDescriptor: SortDescriptor) => {
     console.log("Fetcing processes...");
-    const processes: Process[] = await invoke('get_processes');
+    const processes: Process[] = await invoke('get_processes', { sortDescriptor });
     console.trace("processes", processes);
     return processes;
   }
@@ -56,41 +56,12 @@ export const useProcesses = () => {
     console.log("Killing process...", pid);
   }
 
-  const sortProcesses = (processes: Process[], sortDescriptor: SortDescriptor) => {
-    const sortedProcesses = processes.sort((a, b) => {
-      type ProcessKeyType = keyof typeof a;
-      const { column, direction } = sortDescriptor;
-
-      const [ first, second ] = [
-        a[column as ProcessKeyType],
-        b[column as ProcessKeyType],
-      ];
-
-      let cmp: number;
-      if ([typeof first, typeof second].includes("number")) {
-        cmp = first < second ? -1 : 1;
-      } else {
-        cmp = parseInt(first.toString()) < parseInt(second.toString()) ? -1 : 1;
-      }
-
-      if (direction === "ascending") {
-        cmp *= -1;
-      }
-
-      return cmp;
-    });
-
-    return sortedProcesses;
-  }
-
   useEffect(() => {
     const interval = setInterval(() => {
       console.log("Fetching processes...");
-      fetchProcesses().then((val) => {
-        console.log("Sorting processes...");
-        console.trace("sort descriptor", sortDescriptor);
-        let processes = sortProcesses(val, sortDescriptor);
-        
+      fetchProcesses(sortDescriptor).then((val) => {
+        let processes = val;
+
         if (filterText.length > 0) {
           console.log("Filtering processes...");
           const sanitizedFilterText = filterText.trim().toLowerCase();

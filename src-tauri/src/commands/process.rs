@@ -6,13 +6,21 @@
 
 use sysinfo::SystemExt;
 
-use crate::{models::process::Process, states::system::SystemState, OmniscientError};
+use crate::{
+    models::process::{Process, ProcessColumn, ProcessSortDescriptor, ProcessSortDirection},
+    states::system::SystemState,
+    OmniscientError,
+};
 
 #[tauri::command]
 pub fn get_processes(
     system_state: tauri::State<SystemState>,
+    sort_descriptor: ProcessSortDescriptor,
 ) -> Result<Vec<Process>, OmniscientError> {
     log::debug!("Listing processes...");
+    log::trace!("sort descriptor: {sort_descriptor:?}");
+
+    let ProcessSortDescriptor { column, direction } = sort_descriptor;
 
     let mut system = system_state
         .inner()
@@ -22,10 +30,27 @@ pub fn get_processes(
 
     system.refresh_processes();
 
-    let processes = system
+    let mut processes: Vec<Process> = system
         .processes()
         .into_iter()
         .map(Process::from)
-        .filter(|p| !p.path().is_empty());
-    Ok(processes.collect())
+        .filter(|p| !p.path().is_empty())
+        .collect();
+
+    processes.sort_by(|a, b| match column {
+        ProcessColumn::Path => match direction {
+            ProcessSortDirection::Ascending => a.path().cmp(b.path()),
+            ProcessSortDirection::Descending => b.path().cmp(a.path()),
+        },
+        ProcessColumn::CpuUsage => match direction {
+            ProcessSortDirection::Ascending => a.cpu_usage.total_cmp(&b.cpu_usage),
+            ProcessSortDirection::Descending => b.cpu_usage.total_cmp(&a.cpu_usage),
+        },
+        ProcessColumn::MemoryUsage => match direction {
+            ProcessSortDirection::Ascending => a.memory_usage.cmp(&b.memory_usage),
+            ProcessSortDirection::Descending => b.memory_usage.cmp(&a.memory_usage),
+        },
+    });
+
+    Ok(processes)
 }

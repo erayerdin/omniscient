@@ -4,7 +4,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use sysinfo::{PidExt, ProcessExt};
 
 #[derive(Debug, Serialize)]
@@ -12,8 +12,8 @@ use sysinfo::{PidExt, ProcessExt};
 pub struct Process {
     pid: u32,
     path: String,
-    cpu_usage: f32,
-    memory_usage: u64,
+    pub cpu_usage: f32,
+    pub memory_usage: u64,
 }
 
 impl Process {
@@ -31,4 +31,26 @@ impl From<(&sysinfo::Pid, &sysinfo::Process)> for Process {
             memory_usage: process.virtual_memory(),
         }
     }
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ProcessSortDescriptor {
+    pub column: ProcessColumn,
+    pub direction: ProcessSortDirection,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum ProcessColumn {
+    Path,
+    CpuUsage,
+    MemoryUsage,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum ProcessSortDirection {
+    Ascending,
+    Descending,
 }
