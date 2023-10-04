@@ -16,6 +16,12 @@ pub struct Process {
     memory_usage: u64,
 }
 
+impl Process {
+    pub fn path(&self) -> &str {
+        self.path.as_ref()
+    }
+}
+
 impl From<(&sysinfo::Pid, &sysinfo::Process)> for Process {
     fn from((pid, process): (&sysinfo::Pid, &sysinfo::Process)) -> Self {
         Process {

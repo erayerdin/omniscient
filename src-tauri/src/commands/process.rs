@@ -22,6 +22,10 @@ pub fn get_processes(
 
     system.refresh_processes();
 
-    let processes = system.processes().into_iter().map(Process::from);
+    let processes = system
+        .processes()
+        .into_iter()
+        .map(Process::from)
+        .filter(|p| !p.path().is_empty());
     Ok(processes.collect())
 }
