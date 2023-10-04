@@ -17,8 +17,7 @@
     "next": "latest",
     "react": "latest",
     "react-chartjs-2": "^5.2.0",
-    "react-dom": "latest",
-    "react-fast-marquee": "^1.6.1"
+    "react-dom": "latest"
   },
   "devDependencies": {
     "@types/node": "latest",
