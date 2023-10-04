@@ -40,7 +40,7 @@ impl TryFrom<(&sysinfo::Pid, &sysinfo::Process, usize)> for Process {
             pid: pid.as_u32(),
             path: String::from(process.exe().to_path_buf().to_string_lossy()),
             cpu_usage: process.cpu_usage() / f32::from(core_count),
-            memory_usage: process.virtual_memory(),
+            memory_usage: process.memory(),
         })
     }
 }
