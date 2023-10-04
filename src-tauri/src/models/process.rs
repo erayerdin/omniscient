@@ -7,12 +7,24 @@
 use std::path;
 
 use serde::Serialize;
+use sysinfo::{PidExt, ProcessExt};
 
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Process {
-    pid: u64,
+    pid: u32,
     path: path::PathBuf,
-    cpu_usage: u64,
+    cpu_usage: f32,
     memory_usage: u64,
+}
+
+impl From<(&sysinfo::Pid, &sysinfo::Process)> for Process {
+    fn from((pid, process): (&sysinfo::Pid, &sysinfo::Process)) -> Self {
+        Process {
+            pid: pid.as_u32(),
+            path: process.exe().to_path_buf(),
+            cpu_usage: process.cpu_usage(),
+            memory_usage: process.virtual_memory(),
+        }
+    }
 }
