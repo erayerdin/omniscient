@@ -16,9 +16,11 @@ use crate::{
 pub fn get_processes(
     system_state: tauri::State<SystemState>,
     sort_descriptor: ProcessSortDescriptor,
+    filter_text: Option<String>,
 ) -> Result<Vec<Process>, OmniscientError> {
     log::debug!("Listing processes...");
     log::trace!("sort descriptor: {sort_descriptor:?}");
+    log::trace!("filter text: {filter_text:?}");
 
     let ProcessSortDescriptor { column, direction } = sort_descriptor;
 
@@ -32,9 +34,17 @@ pub fn get_processes(
 
     let mut processes: Vec<Process> = system
         .processes()
-        .into_iter()
+        .iter()
         .map(Process::from)
         .filter(|p| !p.path().is_empty())
+        .filter(|p| match filter_text.clone() {
+            Some(value) => {
+                let val = value.trim().to_lowercase();
+                log::trace!("Sanitized filter text: {val}");
+                p.path().to_lowercase().contains(&val)
+            }
+            None => true,
+        })
         .collect();
 
     processes.sort_by(|a, b| match column {

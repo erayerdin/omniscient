@@ -40,14 +40,19 @@ const generateFakeProcesses = () => {
   });
 }
 
+type FetchProcessesParams = {
+  sortDescriptor: SortDescriptor,
+  filterText: string | null
+}
+
 export const useProcesses = () => {
   const [ processes, setProcesses ] = useState<Process[]>([]);
   const [ filterText, setFilterText ] = useState<string>("");
   const [ sortDescriptor, setSortDescriptor ] = useState<SortDescriptor>({ column: "memoryUsage", direction: "descending" });
 
-  const fetchProcesses = async (sortDescriptor: SortDescriptor) => {
+  const fetchProcesses = async ({ filterText, sortDescriptor }: FetchProcessesParams) => {
     console.log("Fetcing processes...");
-    const processes: Process[] = await invoke('get_processes', { sortDescriptor });
+    const processes: Process[] = await invoke('get_processes', { sortDescriptor, filterText });
     console.trace("processes", processes);
     return processes;
   }
@@ -59,18 +64,8 @@ export const useProcesses = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       console.log("Fetching processes...");
-      fetchProcesses(sortDescriptor).then((val) => {
-        let processes = val;
-
-        if (filterText.length > 0) {
-          console.log("Filtering processes...");
-          const sanitizedFilterText = filterText.trim().toLowerCase();
-          console.trace("sanitized filter text", sanitizedFilterText);
-          processes = processes.filter((p) => p.path.toLowerCase().includes(sanitizedFilterText));
-        }
-
-        setProcesses(processes);
-      });
+      fetchProcesses({ sortDescriptor, filterText: filterText.trim().length === 0 ? null : filterText })
+        .then(setProcesses);
     }, 1000);
     
     return () => clearInterval(interval)
