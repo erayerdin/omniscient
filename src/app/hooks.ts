@@ -6,7 +6,7 @@
 
 "use client";
 
-import { invoke } from "@tauri-apps/api";
+import { invoke } from "@tauri-apps/api/tauri";
 import { useEffect, useState } from "react";
 
 export const useOverviewInfo = (): OverviewInfo => {

@@ -7,7 +7,7 @@
 "use client";
 
 import { SortDescriptor } from "@nextui-org/react";
-import { invoke } from "@tauri-apps/api";
+import { invoke } from "@tauri-apps/api/tauri";
 import { useEffect, useState } from "react";
 
 const fakeItemCount = 100;

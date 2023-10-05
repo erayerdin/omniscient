@@ -9,7 +9,7 @@
 import ArrowSmallDown from "@/components/icons/ArrowSmallDown";
 import ArrowSmallUp from "@/components/icons/ArrowSmallUp";
 import { Card, CardBody } from "@nextui-org/react";
-import { invoke } from "@tauri-apps/api";
+import { invoke } from "@tauri-apps/api/tauri";
 import { useEffect, useState } from "react";
 
 type NetworkCardProps = {
