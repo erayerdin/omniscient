@@ -10,38 +10,6 @@ import { SortDescriptor } from "@nextui-org/react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { useEffect, useState } from "react";
 
-const fakeItemCount = 100;
-
-const generateFakeName = () => {
-  const genFakeName = (len: number) => {
-    const symbols = [
-      "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u",
-      "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
-      "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-    ];
-
-    return Array(len).fill(0).map(() => symbols[Math.floor(symbols.length * Math.random())]).join('');
-  }
-
-  return genFakeName(5);
-}
-
-const fakeNames = Array(fakeItemCount).fill(0).map(() => generateFakeName());
-
-const generateFakeProcesses = () => {
-  return Array(fakeItemCount).fill(0).map((_, i): Process => {
-    const name = fakeNames[i];
-    const path = `/foo/${name}`;
-
-    return {
-      pid: i,
-      path,
-      cpuUsage: Math.random() * 100,
-      memoryUsage: Math.random() * 8 * 1024 * 1024 * 1024,
-    };
-  });
-}
-
 type FetchProcessesParams = {
   sortDescriptor: SortDescriptor,
   filterText: string | null
