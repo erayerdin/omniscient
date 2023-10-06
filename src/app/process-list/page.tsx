@@ -6,19 +6,26 @@
 
 "use client";
 
-import { Button, Input, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
+import { Button, Input, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
 import classNames from "classnames";
 import { useState } from "react";
+import KillProcessModal from "./components/KillProcessModal";
 import { useProcesses } from "./hooks";
 
 function ProcessListPage() {
   const { processes, setFilterText, sortDescriptor, setSortDescriptor, killProcess } = useProcesses();
+  const killProcessDisclosure = useDisclosure();
   const [ selectedProcess, setSelectedProcess ] = useState<Process | null>(null);
 
   console.trace("state", { selectedProcess });
   
   return (
     <div className="flex flex-col space-y-2">
+      <KillProcessModal
+        selectedProcess={selectedProcess}
+        setSelectedProcess={setSelectedProcess}
+        disclosure={killProcessDisclosure}
+      />
       <Input
         type="search"
         placeholder="Search for processes"
@@ -32,6 +39,7 @@ function ProcessListPage() {
         className={classNames(
           { "bg-red-500": selectedProcess != null }
         )}
+        onPress={selectedProcess !== null ? killProcessDisclosure.onOpen : undefined}
       >
         Kill Process
       </Button>
