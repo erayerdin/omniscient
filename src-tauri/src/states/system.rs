@@ -16,6 +16,7 @@ impl Default for SystemState {
         system.refresh_cpu();
         system.refresh_disks_list();
         system.refresh_disks();
+        system.refresh_memory();
         Self(Arc::new(Mutex::new(system)))
     }
 }
