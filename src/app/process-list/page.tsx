@@ -7,11 +7,16 @@
 "use client";
 
 import { Input, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
+import classNames from "classnames";
+import { useState } from "react";
 import { useProcesses } from "./hooks";
 
 function ProcessListPage() {
-  const { processes, filterText, setFilterText, sortDescriptor, setSortDescriptor, killProcess } = useProcesses();
+  const { processes, setFilterText, sortDescriptor, setSortDescriptor, killProcess } = useProcesses();
+  const [ selectedProcess, setSelectedProcess ] = useState<Process | null>(null);
 
+  console.trace("state", { selectedProcess });
+  
   return (
     <div className="flex flex-col space-y-2">
       <Input
@@ -26,6 +31,9 @@ function ProcessListPage() {
       <div className="">
         <Table
           isHeaderSticky
+          color="primary"
+          selectionMode="single"
+          selectedKeys={[selectedProcess].filter((p) => p !== null).map((p) => p!.pid)}
           className="overflow-y-scroll scroll-y h-screen"
           layout="fixed"
           sortDescriptor={sortDescriptor}
@@ -73,7 +81,14 @@ function ProcessListPage() {
               }
 
               return (
-                <TableRow key={p.pid}>
+                <TableRow
+                  key={p.pid}
+                  className={classNames(
+                    "cursor-pointer",
+                    { "bg-blue-500": p.pid === selectedProcess?.pid }, 
+                  )}
+                  onClick={() => setSelectedProcess(p)}
+                >
                   <TableCell>{p.pid}</TableCell>
                   <TableCell>{p.path}</TableCell>
                   <TableCell>{cpuUsage}%</TableCell>
