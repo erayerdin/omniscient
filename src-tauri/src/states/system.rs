@@ -12,6 +12,8 @@ pub struct SystemState(pub Arc<Mutex<System>>);
 
 impl Default for SystemState {
     fn default() -> Self {
-        Self(Arc::new(Mutex::new(System::new())))
+        let mut system = System::new();
+        system.refresh_cpu();
+        Self(Arc::new(Mutex::new(system)))
     }
 }
