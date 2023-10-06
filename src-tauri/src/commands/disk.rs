@@ -12,14 +12,12 @@ use crate::{models::disk::Disk, states::system::SystemState, OmniscientError};
 pub fn get_disk_usage(system_state: tauri::State<SystemState>) -> Result<u64, OmniscientError> {
     log::debug!("Getting disk usage...");
 
-    let mut system = system_state
+    let system = system_state
         .inner()
         .0
         .lock()
         .map_err(|_| OmniscientError::MutexLockError)?;
 
-    system.refresh_disks();
-    system.refresh_disks_list();
     let disks = system
         .disks()
         .into_iter()
@@ -40,14 +38,11 @@ pub fn get_disk_usage(system_state: tauri::State<SystemState>) -> Result<u64, Om
 pub fn get_total_disk(system_state: tauri::State<SystemState>) -> Result<u64, OmniscientError> {
     log::debug!("Getting total disk...");
 
-    let mut system = system_state
+    let system = system_state
         .inner()
         .0
         .lock()
         .map_err(|_| OmniscientError::MutexLockError)?;
-
-    system.refresh_disks();
-    system.refresh_disks_list();
 
     let disks = system
         .disks()
@@ -71,13 +66,11 @@ pub fn get_disk_info(
 ) -> Result<Vec<Disk>, OmniscientError> {
     log::debug!("Getting disk info...");
 
-    let mut system = system_state
+    let system = system_state
         .inner()
         .0
         .lock()
         .map_err(|_| OmniscientError::MutexLockError)?;
-
-    system.refresh_disks_list();
 
     let disks = system.disks();
     log::trace!("disks: {disks:?}");

@@ -29,13 +29,12 @@ pub fn get_memory_usage(system_state: tauri::State<SystemState>) -> Result<u64, 
 pub fn get_total_memory(system_state: tauri::State<SystemState>) -> Result<u64, OmniscientError> {
     log::debug!("Getting total memory...");
 
-    let mut system = system_state
+    let system = system_state
         .inner()
         .0
         .lock()
         .map_err(|_| OmniscientError::MutexLockError)?;
 
-    system.refresh_memory();
     let total_memory = system.total_memory();
     log::trace!("total memory: {total_memory}");
 
