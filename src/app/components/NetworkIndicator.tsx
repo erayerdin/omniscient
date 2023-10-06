@@ -4,10 +4,12 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+"use client";
+
 import ArrowSmallDown from "@/components/icons/ArrowSmallDown";
 import ArrowSmallUp from "@/components/icons/ArrowSmallUp";
 import { Card, CardBody } from "@nextui-org/react";
-import { invoke } from "@tauri-apps/api";
+import { invoke } from "@tauri-apps/api/tauri";
 import { useEffect, useState } from "react";
 
 type NetworkCardProps = {

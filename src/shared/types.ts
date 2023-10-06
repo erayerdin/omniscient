@@ -37,3 +37,10 @@ type Metadata = {
   repositoryUrl: string,
   license: string,
 }
+
+type Process = {
+  pid: number,
+  path: string,
+  cpuUsage: number,
+  memoryUsage: number,
+}

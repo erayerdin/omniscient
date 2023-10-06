@@ -21,4 +21,9 @@ pub enum OmniscientError {
     LoggingInitError(SetLoggerErrorWrapper),
     #[error("Mutex failed to lock.")]
     MutexLockError,
+    #[error("Failed to convert {from} to {to}.")]
+    TypeConversionError {
+        from: &'static str,
+        to: &'static str,
+    },
 }

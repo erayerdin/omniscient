@@ -11,6 +11,7 @@
         "**/*.lock": true,
         "next-env.d.ts": true,
         "package-lock.json": true,
+        "out": true
     },
     "licenser.license": "MPLv2",
     "explorerExclude.backup": {}

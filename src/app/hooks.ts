@@ -4,7 +4,9 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { invoke } from "@tauri-apps/api";
+"use client";
+
+import { invoke } from "@tauri-apps/api/tauri";
 import { useEffect, useState } from "react";
 
 export const useOverviewInfo = (): OverviewInfo => {
