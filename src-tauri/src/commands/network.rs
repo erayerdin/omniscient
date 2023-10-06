@@ -21,7 +21,6 @@ pub fn get_network_received_usage(
         .map_err(|_| OmniscientError::MutexLockError)?;
 
     system.refresh_networks();
-    system.refresh_networks_list();
 
     let networks = system.networks();
     log::trace!("networks: {networks:?}");
@@ -45,7 +44,6 @@ pub fn get_network_transmitted_usage(
         .map_err(|_| OmniscientError::MutexLockError)?;
 
     system.refresh_networks();
-    system.refresh_networks_list();
 
     let networks = system.networks();
     log::trace!("networks: {networks:?}");
