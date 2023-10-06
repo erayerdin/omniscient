@@ -4,7 +4,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-use sysinfo::SystemExt;
+use sysinfo::{Pid, PidExt, ProcessExt, SystemExt};
 
 use crate::{
     models::process::{Process, ProcessColumn, ProcessSortDescriptor, ProcessSortDirection},
@@ -71,4 +71,30 @@ pub fn get_processes(
     });
 
     Ok(processes)
+}
+
+#[tauri::command]
+pub fn kill_process(
+    system_state: tauri::State<SystemState>,
+    pid: u32,
+) -> Result<bool, OmniscientError> {
+    log::debug!("Killing process...");
+    log::trace!("pid: {pid}");
+
+    let system = system_state
+        .inner()
+        .0
+        .lock()
+        .map_err(|_| OmniscientError::MutexLockError)?;
+
+    let process = system.process(Pid::from_u32(pid));
+
+    if process.is_none() {
+        return Ok(false);
+    }
+
+    let process = process.unwrap();
+    let result = process.kill();
+
+    Ok(result)
 }

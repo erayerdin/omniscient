@@ -31,6 +31,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             get_network_transmitted_usage,
             get_metadata,
             get_processes,
+            kill_process,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
