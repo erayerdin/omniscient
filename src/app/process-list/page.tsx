@@ -6,7 +6,7 @@
 
 "use client";
 
-import { Input, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
+import { Button, Input, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
 import classNames from "classnames";
 import { useState } from "react";
 import { useProcesses } from "./hooks";
@@ -28,77 +28,82 @@ function ProcessListPage() {
           setFilterText(value);
         }}
       />
-      <div className="">
-        <Table
-          isHeaderSticky
-          color="primary"
-          selectionMode="single"
-          selectedKeys={[selectedProcess].filter((p) => p !== null).map((p) => p!.pid)}
-          className="overflow-y-scroll scroll-y h-screen"
-          layout="fixed"
-          sortDescriptor={sortDescriptor}
-          onSortChange={(sortDescriptor) => {
-            setSortDescriptor(sortDescriptor);
-            console.trace("Sort descriptor changed", sortDescriptor);
-          }}
-          onRowAction={(key) => {
-            const process = processes.find((p) => p.pid === key);
+      <Button
+        className={classNames(
+          { "bg-red-500": selectedProcess != null }
+        )}
+      >
+        Kill Process
+      </Button>
+      <Table
+        isHeaderSticky
+        color="primary"
+        selectionMode="single"
+        selectedKeys={[selectedProcess].filter((p) => p !== null).map((p) => p!.pid)}
+        className="overflow-y-scroll scroll-y h-screen"
+        layout="fixed"
+        sortDescriptor={sortDescriptor}
+        onSortChange={(sortDescriptor) => {
+          setSortDescriptor(sortDescriptor);
+          console.trace("Sort descriptor changed", sortDescriptor);
+        }}
+        onRowAction={(key) => {
+          const process = processes.find((p) => p.pid === key);
+          
+          if (process !== undefined) {
+            killProcess(process);
+          }
+        }}
+      >
+        <TableHeader>
+          <TableColumn>PID</TableColumn>
+          <TableColumn key="path" allowsSorting>Path</TableColumn>
+          <TableColumn key="cpuUsage" allowsSorting>CPU</TableColumn>
+          <TableColumn key="memoryUsage" allowsSorting>Memory</TableColumn>
+        </TableHeader>
+        <TableBody loadingContent={<Spinner />} items={processes}>
+          {(p) => {
+            const cpuUsage = p.cpuUsage.toFixed(2);
             
-            if (process !== undefined) {
-              killProcess(process);
+            const memoryUsageBytes = p.memoryUsage;
+            const memoryUsageKilobytes = memoryUsageBytes / 1024;
+            const memoryUsageMegabytes = memoryUsageKilobytes / 1024;
+            const memoryUsageGigabytes = memoryUsageMegabytes / 1024;
+
+            let memoryUsageHumanReadable: string;
+            let memoryUsageMeasureType: "kB" | "mB" | "gB";
+
+            memoryUsageHumanReadable = memoryUsageKilobytes.toFixed(2);
+            memoryUsageMeasureType = "kB";
+
+            if (memoryUsageKilobytes > 1024) {
+              memoryUsageHumanReadable = memoryUsageMegabytes.toFixed(2);
+              memoryUsageMeasureType = "mB";
             }
+
+            if (memoryUsageMegabytes > 1024) {
+              memoryUsageHumanReadable = memoryUsageGigabytes.toFixed(2);
+              memoryUsageMeasureType = "gB";
+            }
+
+            return (
+              <TableRow
+                key={p.pid}
+                className={classNames(
+                  "cursor-pointer",
+                  { "bg-blue-500": p.pid === selectedProcess?.pid }, 
+                )}
+                onClick={() => setSelectedProcess(p)}
+              >
+                <TableCell>{p.pid}</TableCell>
+                <TableCell>{p.path}</TableCell>
+                <TableCell>{cpuUsage}%</TableCell>
+                <TableCell>{memoryUsageHumanReadable} {memoryUsageMeasureType}</TableCell>
+              </TableRow>
+            );
           }}
-        >
-          <TableHeader>
-            <TableColumn>PID</TableColumn>
-            <TableColumn key="path" allowsSorting>Path</TableColumn>
-            <TableColumn key="cpuUsage" allowsSorting>CPU</TableColumn>
-            <TableColumn key="memoryUsage" allowsSorting>Memory</TableColumn>
-          </TableHeader>
-          <TableBody loadingContent={<Spinner />} items={processes}>
-            {(p) => {
-              const cpuUsage = p.cpuUsage.toFixed(2);
-              
-              const memoryUsageBytes = p.memoryUsage;
-              const memoryUsageKilobytes = memoryUsageBytes / 1024;
-              const memoryUsageMegabytes = memoryUsageKilobytes / 1024;
-              const memoryUsageGigabytes = memoryUsageMegabytes / 1024;
-
-              let memoryUsageHumanReadable: string;
-              let memoryUsageMeasureType: "kB" | "mB" | "gB";
-
-              memoryUsageHumanReadable = memoryUsageKilobytes.toFixed(2);
-              memoryUsageMeasureType = "kB";
-
-              if (memoryUsageKilobytes > 1024) {
-                memoryUsageHumanReadable = memoryUsageMegabytes.toFixed(2);
-                memoryUsageMeasureType = "mB";
-              }
-
-              if (memoryUsageMegabytes > 1024) {
-                memoryUsageHumanReadable = memoryUsageGigabytes.toFixed(2);
-                memoryUsageMeasureType = "gB";
-              }
-
-              return (
-                <TableRow
-                  key={p.pid}
-                  className={classNames(
-                    "cursor-pointer",
-                    { "bg-blue-500": p.pid === selectedProcess?.pid }, 
-                  )}
-                  onClick={() => setSelectedProcess(p)}
-                >
-                  <TableCell>{p.pid}</TableCell>
-                  <TableCell>{p.path}</TableCell>
-                  <TableCell>{cpuUsage}%</TableCell>
-                  <TableCell>{memoryUsageHumanReadable} {memoryUsageMeasureType}</TableCell>
-                </TableRow>
-              );
-            }}
-          </TableBody>
-        </Table>
-      </div>
+        </TableBody>
+      </Table>
     </div>
   )
 }
