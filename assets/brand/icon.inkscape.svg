@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1024"
+   height="1024"
+   viewBox="0 0 270.9333 270.9333"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="logo-inkscape.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title1">Omnscient</title>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     showgrid="true"
+     showguides="true"
+     inkscape:zoom="0.74653479"
+     inkscape:cx="464.81424"
+     inkscape:cy="592.06886"
+     inkscape:window-width="1920"
+     inkscape:window-height="1015"
+     inkscape:window-x="0"
+     inkscape:window-y="36"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       id="grid1"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="0.2645833"
+       spacingy="0.2645833"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="16"
+       dotted="false"
+       gridanglex="30"
+       gridanglez="30"
+       visible="true" />
+    <sodipodi:guide
+       position="-59.266657,135.46666"
+       orientation="0,-1"
+       id="guide14"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="135.46664,88.899997"
+       orientation="1,0"
+       id="guide15"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <filter
+       style="color-interpolation-filters:sRGB"
+       inkscape:label="Drop Shadow"
+       id="filter12"
+       x="-0.046517272"
+       y="-0.046517272"
+       width="1.1166566"
+       height="1.1166566">
+      <feFlood
+         result="flood"
+         in="SourceGraphic"
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         id="feFlood11" />
+      <feGaussianBlur
+         result="blur"
+         in="SourceGraphic"
+         stdDeviation="4.923077"
+         id="feGaussianBlur11" />
+      <feOffset
+         result="offset"
+         in="blur"
+         dx="6.000000"
+         dy="6.000000"
+         id="feOffset11" />
+      <feComposite
+         result="comp1"
+         operator="in"
+         in="flood"
+         in2="offset"
+         id="feComposite11" />
+      <feComposite
+         result="comp2"
+         operator="over"
+         in="SourceGraphic"
+         in2="comp1"
+         id="feComposite12" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:62.0117;stroke-linecap:round;stroke-linejoin:round;filter:url(#filter12);stroke-opacity:1"
+       id="path1"
+       cx="139.188"
+       cy="139.89684"
+       r="126.99998" />
+    <g
+       id="g15"
+       inkscape:label="eye"
+       transform="matrix(0.96081428,0,0,1,9.9993718,0)">
+      <path
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:8.46667;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 16.303101,135.46665 c 0,0 119.163549,-118.649071 238.875859,0"
+         id="path15"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:8.46667;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 16.028721,136.34985 c 0,0 119.163549,118.64907 238.875859,0"
+         id="path15-5"
+         sodipodi:nodetypes="cc" />
+      <circle
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:9.31334;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         id="path16"
+         cx="135.46664"
+         cy="135.46664"
+         r="46.566658" />
+      <path
+         sodipodi:type="star"
+         style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:4.18042;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         id="path17"
+         inkscape:flatsided="true"
+         sodipodi:sides="3"
+         sodipodi:cx="135.46664"
+         sodipodi:cy="135.46664"
+         sodipodi:r1="29.934187"
+         sodipodi:r2="14.967094"
+         sodipodi:arg1="0.78539816"
+         sodipodi:arg2="1.8325957"
+         inkscape:rounded="0"
+         inkscape:randomized="0"
+         d="m 156.63331,156.63331 -50.08087,-13.41913 36.66174,-36.66174 z"
+         inkscape:transform-center-x="3.8737694"
+         inkscape:transform-center-y="-3.8737694" />
+      <circle
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:6.1753;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         id="path18"
+         cx="142.04306"
+         cy="107.76211"
+         r="7.2242947" />
+      <circle
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:6.1753;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         id="path18-6"
+         cx="108.39938"
+         cy="141.34761"
+         r="7.2242947" />
+      <circle
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:6.1753;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         id="path18-61"
+         cx="155.52071"
+         cy="155.04697"
+         r="7.2242947" />
+    </g>
+  </g>
+  <metadata
+     id="metadata1">
+    <rdf:RDF>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+      <cc:Work
+         rdf:about="">
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/" />
+        <dc:title>Omnscient</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Eray Erdin</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:description>The logo of the process management and system information app named Omniscient</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

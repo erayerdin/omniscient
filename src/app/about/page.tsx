@@ -7,6 +7,7 @@
 "use client";
 
 import { Button, Card, CircularProgress } from "@nextui-org/react";
+import Image from "next/image";
 import { useMetadata } from "./hooks";
 
 function AboutPage() {
@@ -19,9 +20,15 @@ function AboutPage() {
           <CircularProgress />
         </div>
       ) : (
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col space-y-4 items-center">
           {/** Header */}
-          <header className="flex flex-col space-y-2">
+          <header className="flex flex-col space-y-2 items-center">
+            <Image
+              src="/assets/icon.inkscape.svg"
+              alt="Omniscient logo"
+              width={128}
+              height={128}
+            />
             <span className="flex space-x-4 items-center">
               <p className="text-2xl">
                 {metadata.name[0].toUpperCase() + metadata.name.slice(1)}
