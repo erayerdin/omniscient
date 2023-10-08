@@ -1,9 +1,15 @@
-# Omniscient
+<div align="center">
+    <img src="assets/brand/logo.inkscape.svg" width="128" height="128" align="center" />
+</div>
 
-![GitHub tag (with filter)](https://img.shields.io/github/v/tag/erayerdin/omniscient)
-![GitHub](https://img.shields.io/github/license/erayerdin/omniscient)
+<h1 align="center">Omniscient</h1>
 
-Omniscient is a process manager app powered by Tauri.
+<div align="center">
+    <img src="https://img.shields.io/github/v/tag/erayerdin/omniscient" alt="latest release" />
+    <img src="https://img.shields.io/github/license/erayerdin/omniscient" alt="license" />
+</div>
+
+<p align="center">Omniscient is a process manager app powered by Tauri.</p>
 
 Omniscient is not designed for everyday use from the get-go and is forever an alpha/beta software. The whole purpose of this app is to study Tauri. You are welcome to study it and contribute.
 
