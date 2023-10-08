@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="assets/brand/logo.inkscape.svg" width="128" height="128" align="center" />
+    <img src="assets/brand/icon.inkscape.svg" width="128" height="128" align="center" />
 </div>
 
 <h1 align="center">Omniscient</h1>
