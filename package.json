@@ -18,7 +18,8 @@
     "next": "latest",
     "react": "latest",
     "react-chartjs-2": "^5.2.0",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "use-debounce": "^9.0.4"
   },
   "devDependencies": {
     "@types/node": "latest",
