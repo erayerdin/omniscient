@@ -9,6 +9,7 @@
 import { SortDescriptor } from "@nextui-org/react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
 
 type FetchProcessesParams = {
   sortDescriptor: SortDescriptor,
@@ -19,6 +20,8 @@ export const useProcesses = () => {
   const [ processes, setProcesses ] = useState<Process[]>([]);
   const [ filterText, setFilterText ] = useState<string>("");
   const [ sortDescriptor, setSortDescriptor ] = useState<SortDescriptor>({ column: "memoryUsage", direction: "descending" });
+
+  const [ filterTextVal ] = useDebounce(filterText, 1000);
 
   const fetchProcesses = async ({ filterText, sortDescriptor }: FetchProcessesParams) => {
     console.log("Fetcing processes...");
@@ -34,12 +37,12 @@ export const useProcesses = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       console.log("Fetching processes...");
-      fetchProcesses({ sortDescriptor, filterText: filterText.trim().length === 0 ? null : filterText })
+      fetchProcesses({ sortDescriptor, filterText: filterTextVal.trim().length === 0 ? null : filterTextVal })
         .then(setProcesses);
     }, 1000);
     
     return () => clearInterval(interval)
-  }, [filterText, sortDescriptor]);
+  }, [filterTextVal, sortDescriptor]);
 
-  return { processes, filterText, setFilterText, sortDescriptor, setSortDescriptor, killProcess };
+  return { processes, filterText: filterTextVal, setFilterText, sortDescriptor, setSortDescriptor, killProcess };
 }
