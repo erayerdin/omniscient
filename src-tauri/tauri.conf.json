@@ -30,7 +30,9 @@
       "icon": [
         "../assets/brand/icon-32.png",
         "../assets/brand/icon-128.png",
-        "../assets/brand/icon-256.png"
+        "../assets/brand/icon-256.png",
+        "../assets/brand/icon.icns",
+        "../assets/brand/icon.ico"
       ],
       "identifier": "com.erayerdin",
       "longDescription": "",
