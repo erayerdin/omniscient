@@ -15,7 +15,18 @@ Omniscient is not designed for everyday use from the get-go and is forever an al
 
 ## Download
 
-The app is currently distributed in `deb` and `AppImage` formats. See [the latest release](https://github.com/erayerdin/omniscient/releases/latest) to grab it.
+See [the latest release](https://github.com/erayerdin/omniscient/releases/latest) to download the app.
+
+The app is distributed in various formats for all major platforms:
+
+ - `deb` package for Debian-based (Debian, Ubuntu, Linux Mint etc.)
+ - `AppImage` package for non-Debian Linux distros (Arch Linux, Fedora etc.)
+ - `dmg` package for MacOS
+ - `msi` and `exe` installers for Windows
+
+The app is mainly tested on Linux. There might be inconsistencies and bugs on other platforms. If you encounter any weird behavior, kindly report.
+
+The installers are not signed, so you might get security warnings on Windows while installing the app.
 
 ## Project Structure and Conventions
 
