@@ -104,7 +104,7 @@ function ProcessListPage() {
                 onClick={() => setSelectedProcess(p)}
               >
                 <TableCell>{p.pid}</TableCell>
-                <TableCell>{p.path}</TableCell>
+                <TableCell className="break-all">{p.path}</TableCell>
                 <TableCell>{cpuUsage}%</TableCell>
                 <TableCell>{memoryUsageHumanReadable} {memoryUsageMeasureType}</TableCell>
               </TableRow>
