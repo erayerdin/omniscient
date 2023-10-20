@@ -31,6 +31,7 @@ function ProcessListPage() {
         placeholder="Search for processes"
         onChange={(e) => {
           console.log("Process search has changed.");
+          setSelectedProcess(null);
           const value = e.target.value;
           setFilterText(value);
         }}
