@@ -15,8 +15,8 @@ pub fn get_memory_usage(system_state: tauri::State<SystemState>) -> Result<u64, 
     let mut system = system_state
         .inner()
         .0
-        .lock()
-        .map_err(|_| OmniscientError::MutexLockError)?;
+        .write()
+        .map_err(|_| OmniscientError::RwLockError)?;
 
     system.refresh_memory();
     let memory_usage = system.used_memory();
@@ -32,8 +32,8 @@ pub fn get_total_memory(system_state: tauri::State<SystemState>) -> Result<u64, 
     let system = system_state
         .inner()
         .0
-        .lock()
-        .map_err(|_| OmniscientError::MutexLockError)?;
+        .read()
+        .map_err(|_| OmniscientError::RwLockError)?;
 
     let total_memory = system.total_memory();
     log::trace!("total memory: {total_memory}");

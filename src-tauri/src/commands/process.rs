@@ -27,8 +27,8 @@ pub fn get_processes(
     let mut system = system_state
         .inner()
         .0
-        .lock()
-        .map_err(|_| OmniscientError::MutexLockError)?;
+        .write()
+        .map_err(|_| OmniscientError::RwLockError)?;
 
     system.refresh_processes();
 
@@ -84,8 +84,8 @@ pub fn kill_process(
     let system = system_state
         .inner()
         .0
-        .lock()
-        .map_err(|_| OmniscientError::MutexLockError)?;
+        .read()
+        .map_err(|_| OmniscientError::RwLockError)?;
 
     let process = system.process(Pid::from_u32(pid));
 

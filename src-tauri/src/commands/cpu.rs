@@ -15,8 +15,8 @@ pub fn get_cpu_usage(system_state: tauri::State<SystemState>) -> Result<f32, Omn
     let mut system = system_state
         .inner()
         .0
-        .lock()
-        .map_err(|_| OmniscientError::MutexLockError)?;
+        .write()
+        .map_err(|_| OmniscientError::RwLockError)?;
 
     system.refresh_cpu();
 
@@ -36,8 +36,8 @@ pub fn get_cpu_info(system_state: tauri::State<SystemState>) -> Result<Vec<Cpu>,
     let system = system_state
         .inner()
         .0
-        .lock()
-        .map_err(|_| OmniscientError::MutexLockError)?;
+        .read()
+        .map_err(|_| OmniscientError::RwLockError)?;
 
     let cpus = system.cpus();
     log::trace!("cpus: {cpus:?}");

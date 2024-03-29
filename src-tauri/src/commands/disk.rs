@@ -15,8 +15,8 @@ pub fn get_disk_usage(system_state: tauri::State<SystemState>) -> Result<u64, Om
     let system = system_state
         .inner()
         .0
-        .lock()
-        .map_err(|_| OmniscientError::MutexLockError)?;
+        .read()
+        .map_err(|_| OmniscientError::RwLockError)?;
 
     let disks = system
         .disks()
@@ -41,8 +41,8 @@ pub fn get_total_disk(system_state: tauri::State<SystemState>) -> Result<u64, Om
     let system = system_state
         .inner()
         .0
-        .lock()
-        .map_err(|_| OmniscientError::MutexLockError)?;
+        .read()
+        .map_err(|_| OmniscientError::RwLockError)?;
 
     let disks = system
         .disks()
@@ -69,8 +69,8 @@ pub fn get_disk_info(
     let system = system_state
         .inner()
         .0
-        .lock()
-        .map_err(|_| OmniscientError::MutexLockError)?;
+        .read()
+        .map_err(|_| OmniscientError::RwLockError)?;
 
     let disks = system.disks();
     log::trace!("disks: {disks:?}");

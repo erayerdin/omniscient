@@ -17,8 +17,8 @@ pub fn get_network_received_usage(
     let mut system = system_state
         .inner()
         .0
-        .lock()
-        .map_err(|_| OmniscientError::MutexLockError)?;
+        .write()
+        .map_err(|_| OmniscientError::RwLockError)?;
 
     system.refresh_networks();
 
@@ -40,8 +40,8 @@ pub fn get_network_transmitted_usage(
     let mut system = system_state
         .inner()
         .0
-        .lock()
-        .map_err(|_| OmniscientError::MutexLockError)?;
+        .write()
+        .map_err(|_| OmniscientError::RwLockError)?;
 
     system.refresh_networks();
 
